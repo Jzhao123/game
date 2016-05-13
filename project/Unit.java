@@ -52,9 +52,9 @@ public class Unit {
     {
         return curStam;
     }
-    public void setStamina(int stam)
+    public void updateStam(int usedStam)
     {
-           curStam = stam;
+           curStam = curStam - usedStam;
     }
     }
 }
