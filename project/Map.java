@@ -22,8 +22,8 @@ public class Map {
     /**
      * Adds a unit to the map.
      */
-    public void addUnit(Unit u, int x, int y) {
-        units[x][y] = u;
+    public void addUnit(Unit u, int xPos, int yPos) {
+        units[xPos][yPos] = u;
     }
     
     /**
@@ -42,7 +42,22 @@ public class Map {
      * [Must account for other units, terrain, buildings, etc. -- not an easy method]
      */
     public void moveUnit(int ox, int oy, int nx, int ny) {
-        //help
+        if(units[ox][oy] != null)
+        {
+            if((Math.abs(ox-nx) + Math.abs(oy-ny))>units[ox][oy].getStamina)
+            {
+                //Message says can't move
+            }
+            else
+            {
+                units[ox][oy].updateStam(Math.abs(ox-nx) + Math.abs(oy-ny))
+                units[nx][ny] = units[ox][oy];
+                units[ox][oy] = null;
+            }
+        }
+        else
+        //Message says no unit on grid position
+        
     }
     
     
