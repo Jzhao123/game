@@ -8,15 +8,17 @@ public class Unit {
     private double atk, def;
     private double exp;
     private double xPos, yPos;
+    private int curStam;
 
     /**
      * Constructor for objects of class Unit
      */
-    public Unit(double health, double attack, Map gameMap) {
+    public Unit(double health, double attack, Map gameMap,int stamina) {
         hp = maxhp = health;
         atk = attack;
         def = 0;
         exp = 0;
+        curStam = stamina;
     }
     /**
      * Returns the amount of remaining health 
@@ -45,5 +47,9 @@ public class Unit {
     public boolean hit(double damage) {
         hp -= damage;
         return (hp > 0);
+    }
+    public int getStamina()
+    {
+        return curStam;
     }
 }
