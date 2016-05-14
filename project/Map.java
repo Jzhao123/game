@@ -61,8 +61,14 @@ public class Map {
     }
     private void combat(Unit attacker,Unit defender)
     {
-        defender.hit(attacker.getAttack * (1-(defender.getDefense * (3/4))));
-        attacker.hit((defender.getDefense * 50) * (1-(attacker.getDefense * (1/3))));
+        if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * terrain[defender.getXPos()][defender.getYPos()].getXdef())))))
+        {
+            units[defender.getXPos()][defender.getYPos()] = null;
+        }
+        if(!(attacker.hit((defender.getDefense() * 50) * (1-(attacker.getDefense() * (1/3))))))
+        {
+            units[attacker.getXPos()][attacker.getYPos()] = null;
+        }
     }
     
     
