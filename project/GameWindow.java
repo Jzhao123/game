@@ -8,7 +8,7 @@ import java.awt.event.*;
  */
 public class GameWindow extends JFrame{
     private final int width = 900;
-    private final int height = 630;
+    private final int height = 600;
     private Map map;
     private boolean running;
     private final int fps = 30;
@@ -20,7 +20,7 @@ public class GameWindow extends JFrame{
      * Constructs a new game window.
      */
     public GameWindow() {
-        map = new Map(width/9, height/9);
+        map = new Map(width/6, height/6);
     }
     
     /**
@@ -69,7 +69,7 @@ public class GameWindow extends JFrame{
     public void draw() {
         Graphics g = getGraphics();
         Graphics bbg = buffer.getGraphics();
-        map.drawImage(bbg);
+        map.drawImage(bbg, buffer);
         g.drawImage(buffer, 0, 0, this);
     }
     

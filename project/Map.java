@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.*;
 
 /**
  * Represents a map.
@@ -8,6 +9,8 @@ public class Map {
     private Building[][] buildings;
     private Unit[][] units;
     private int width, height;
+    private final static int scale = 3;
+    private final static int size = 2;
 
     /**
      * Constructor for objects of class Map
@@ -15,8 +18,8 @@ public class Map {
     public Map(int mapWidth, int mapHeight) {
         width = mapWidth;
         height = mapHeight;
-        landscape = new Terrain[width][height];
-        buildings = new Building[width][height];
+        landscape = new Terrain[width*scale][height*scale];
+        buildings = new Building[width*scale][height*scale];
         units = new Unit[width][height];
     }
     
@@ -68,8 +71,10 @@ public class Map {
         }
     }
     
-    private void combat(Unit attacker,Unit defender)
-    {
+    /**
+     * Simulates combat between two units.
+     */
+    private void combat(Unit attacker,Unit defender) {
         if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef())))))
         {
             units[defender.getXPos()][defender.getYPos()] = null;
@@ -83,8 +88,24 @@ public class Map {
     /**
      * Draws the current state of the map into the graphics object.
      */
-    public void drawImage(Graphics g) {
-        
+    public void drawImage(Graphics g, BufferedImage image) {
+        for (int i = 0; i < width*scale; i++) {
+            for (int j = 0; j < height*scale; j++) {
+                g.setColor(landscape[i][j].getColor());
+                if (buildings[i][j] != null) {
+                    g.setColor(buildings[i][j].getColor());
+                }
+                g.fillRect(size*i, size*j, size, size);
+            }
+        }
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (units[i][j] != null) {
+                    g.setColor(units[i][j].getColor());
+                    g.fillOval(size*scale*i, size*scale*j, size*scale, size*scale);
+                }
+            }
+        }
     }
     
     /**

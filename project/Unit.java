@@ -1,3 +1,4 @@
+import java.awt.Color;
 
 /**
  * Contains the basic attributes of a single soldier.
@@ -8,17 +9,26 @@ public class Unit {
     private double atk, def;
     private double exp;
     private int xPos, yPos;
-    private int curStam;
+    private int maxStam, curStam;
+    private Color color;
 
     /**
      * Constructor for objects of class Unit
      */
-    public Unit(int health, double attack, Map gameMap,int stamina) {
+    public Unit(int health, double attack, Map gameMap, int stamina, Color c) {
         hp = maxhp = health;
         atk = attack;//Stock Attack is 50, increases as exp goes up
         def = 0;//Precondition: Defense must be between 0 and 1
         exp = 0;
-        curStam = stamina;
+        curStam = maxStam = stamina;
+        color = c;
+    }
+    
+    /**
+     * Returns the color of the unit.
+     */
+    public Color getColor() {
+        return color;
     }
     
     /**
@@ -42,13 +52,17 @@ public class Unit {
         return def;
     }
     
-    public int getXPos()
-    {
+    /**
+     * Returns the x-position of the object.
+     */
+    public int getXPos() {
         return xPos;
     }
     
-    public int getYPos()
-    {
+    /**
+     * Returns the y-position of the object.
+     */
+    public int getYPos() {
         return yPos;
     }
     
@@ -60,14 +74,19 @@ public class Unit {
         return (hp > 0);
     }
     
-    public int getStamina()
-    {
+    /**
+     * Returns the remaining stamina of the object.
+     */
+    public int getStamina() {
         return curStam;
     }
     
-    public void updateStam(int usedStam)
-    {
+    /**
+     * Updates the stamina of the object. Returns true if the object still has stamina.
+     */
+    public boolean updateStam(int usedStam) {
            curStam = curStam - usedStam;
+           return (curStam > 0);
     }
     
 }

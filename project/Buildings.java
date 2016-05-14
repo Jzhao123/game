@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.Color;
 
 /**
  * Contains static methods to produce default buildings.
@@ -16,7 +17,7 @@ public class Buildings {
         for (int i = 0; i < width; i++) {
             yLocs.add(yloc + i);
         }
-        return new Building(xLocs, yLocs, 5, false);
+        return new Building(xLocs, yLocs, 5, false, Color.orange);
     }
     
     /**
@@ -31,6 +32,6 @@ public class Buildings {
         for (int i = 0; i < width; i++) {
             yLocs.add(yloc + i);
         }
-        return new Building(xLocs, yLocs, 100, true);
+        return new Building(xLocs, yLocs, 100, true, Color.lightGray);
     }
 }

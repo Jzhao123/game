@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.awt.Color;
 
 /**
  * Represents a building as a series of individual wall tiles.
@@ -8,16 +9,25 @@ public class Building {
     private int[][] walls;
     private int def;
     private boolean high;
+    private Color color;
 
     /**
      * Constructor for objects of class Building
      */
-    public Building(ArrayList<Integer> xLocs, ArrayList<Integer> yLocs, int def, boolean high) {
+    public Building(ArrayList<Integer> xLocs, ArrayList<Integer> yLocs, int def, boolean high, Color c) {
         walls = new int[xLocs.size()][2];
         for (int i = 0; i < xLocs.size(); i++) {
             walls[0][i] = xLocs.get(i).intValue();
             walls[1][i] = yLocs.get(i).intValue();
         }
+        color = c;
+    }
+    
+    /**
+     * Returns the color of the building
+     */
+    public Color getColor() {
+        return color;
     }
     
     /**
