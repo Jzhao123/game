@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=gameMap
+comment0.target=Player(Map)
+comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Player\n
+comment1.params=u
+comment1.target=void\ setSelected(Unit)
+comment1.text=\n\ Tells\ a\ unit\ to\ be\ selected.\n
+comment2.params=
+comment2.target=Unit\ getSelected()
+comment2.text=\n\ Returns\ the\ selected\ unit.\n
+numComments=3

@@ -8,6 +8,7 @@ public class Map {
     private Terrain[][] landscape;
     private Building[][] buildings;
     private Unit[][] units;
+    private Player[] players;
     private int width, height;
     private final static int scale = 3;
     private final static int size = 2;
@@ -21,6 +22,7 @@ public class Map {
         landscape = new Terrain[width*scale][height*scale];
         buildings = new Building[width*scale][height*scale];
         units = new Unit[width][height];
+        players = new Player[2];
     }
     
     /**

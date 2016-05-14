@@ -11,17 +11,26 @@ public class Unit {
     private int xPos, yPos;
     private int maxStam, curStam;
     private Color color;
+    private Player player;
 
     /**
      * Constructor for objects of class Unit
      */
-    public Unit(int health, double attack, Map gameMap, int stamina, Color c) {
+    public Unit(int health, double attack, Map gameMap, int stamina, Color c, Player person) {
         hp = maxhp = health;
         atk = attack;//Stock Attack is 50, increases as exp goes up
         def = 0;//Precondition: Defense must be between 0 and 1
         exp = 0;
         curStam = maxStam = stamina;
         color = c;
+        player = person;
+    }
+    
+    /**
+     * Returns the player object the unit is associated with.
+     */
+    public Player getPlayer() {
+        return player;
     }
     
     /**
@@ -64,6 +73,20 @@ public class Unit {
      */
     public int getYPos() {
         return yPos;
+    }
+    
+    /**
+     * Sets the x-position of the object to x.
+     */
+    public void setXPos(int x) {
+        xPos = x;
+    }
+    
+    /**
+     * Sets the y-position of the object to y.
+     */
+    public void setYPos(int y) {
+        yPos = y;
     }
     
     /**
