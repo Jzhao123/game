@@ -13,8 +13,8 @@ public class Terrain {
      * Constructor for objects of class Terrain
      */
     public Terrain(int speedCost, int defBuff, Color appearance) {
-        xspd = speedCost;
-        xdef = defBuff;
+        xspd = speedCost;//Speed will be a increase or decrease in speed
+        xdef = defBuff;//Defense will be a multiplier
         color = appearance;
     }
 
