@@ -40,7 +40,14 @@ public class Unit {
     public double getDefense() {
         return def;
     }
-    
+    public double getXPos()
+    {
+        return xPos;
+    }
+    public double getYPos()
+    {
+        return yPos;
+    }
     /**
      * Takes damage. Returns whether or not the unit is still alive.
      */
