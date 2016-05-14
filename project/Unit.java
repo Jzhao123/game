@@ -15,8 +15,8 @@ public class Unit {
      */
     public Unit(double health, double attack, Map gameMap,int stamina) {
         hp = maxhp = health;
-        atk = attack;
-        def = 0;
+        atk = attack;//Stock Attack is 50, increases as exp goes up
+        def = 0;//Precondition: Defense must be between 0 and 1
         exp = 0;
         curStam = stamina;
     }
