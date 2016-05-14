@@ -4,26 +4,27 @@
  * 
  */
 public class Unit {
-    private double maxhp, hp;
+    private int maxhp, hp;
     private double atk, def;
     private double exp;
-    private double xPos, yPos;
+    private int xPos, yPos;
     private int curStam;
 
     /**
      * Constructor for objects of class Unit
      */
-    public Unit(double health, double attack, Map gameMap,int stamina) {
+    public Unit(int health, double attack, Map gameMap,int stamina) {
         hp = maxhp = health;
         atk = attack;//Stock Attack is 50, increases as exp goes up
         def = 0;//Precondition: Defense must be between 0 and 1
         exp = 0;
         curStam = stamina;
     }
+    
     /**
      * Returns the amount of remaining health 
      */
-    public double getHealth() {
+    public int getHealth() {
         return hp;
     }
     
@@ -40,14 +41,17 @@ public class Unit {
     public double getDefense() {
         return def;
     }
-    public double getXPos()
+    
+    public int getXPos()
     {
         return xPos;
     }
-    public double getYPos()
+    
+    public int getYPos()
     {
         return yPos;
     }
+    
     /**
      * Takes damage. Returns whether or not the unit is still alive.
      */
@@ -55,13 +59,15 @@ public class Unit {
         hp -= damage;
         return (hp > 0);
     }
+    
     public int getStamina()
     {
         return curStam;
     }
+    
     public void updateStam(int usedStam)
     {
            curStam = curStam - usedStam;
     }
-    }
+    
 }

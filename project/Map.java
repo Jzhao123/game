@@ -1,3 +1,4 @@
+import java.awt.*;
 
 /**
  * Represents a map.
@@ -11,10 +12,10 @@ public class Map {
     /**
      * Constructor for objects of class Map
      */
-    public Map(Terrain[][] terrains) {
-        landscape = terrains;
-        width = landscape.length;
-        height = landscape[0].length;
+    public Map(int mapWidth, int mapHeight) {
+        width = mapWidth;
+        height = mapHeight;
+        landscape = new Terrain[width][height];
         buildings = new Building[width][height];
         units = new Unit[width][height];
     }
@@ -24,6 +25,13 @@ public class Map {
      */
     public void addUnit(Unit u, int xPos, int yPos) {
         units[xPos][yPos] = u;
+    }
+    
+    /**
+     * Adds a terrain landscape to the map.
+     */
+    public void addTerrains(Terrain[][] terrains) {
+        landscape = terrains;
     }
     
     /**
@@ -44,24 +52,25 @@ public class Map {
     public void moveUnit(int ox, int oy, int nx, int ny) {
         if(units[ox][oy] != null)
         {
-            if((Math.abs(ox-nx) + Math.abs(oy-ny))>units[ox][oy].getStamina)
+            if((Math.abs(ox-nx) + Math.abs(oy-ny))>units[ox][oy].getStamina())
             {
                 //Message says can't move
             }
             else
             {
-                units[ox][oy].updateStam(Math.abs(ox-nx) + Math.abs(oy-ny))
+                units[ox][oy].updateStam(Math.abs(ox-nx) + Math.abs(oy-ny));
                 units[nx][ny] = units[ox][oy];
                 units[ox][oy] = null;
             }
         }
-        else
-        //Message says no unit on grid position
-        
+        else {
+            //Message says no unit on grid position
+        }
     }
+    
     private void combat(Unit attacker,Unit defender)
     {
-        if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * terrain[defender.getXPos()][defender.getYPos()].getXdef())))))
+        if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef())))))
         {
             units[defender.getXPos()][defender.getYPos()] = null;
         }
@@ -71,5 +80,18 @@ public class Map {
         }
     }
     
+    /**
+     * Draws the current state of the map into the graphics object.
+     */
+    public void drawImage(Graphics g) {
+        
+    }
+    
+    /**
+     * Updates the current conditions of the game map.
+     */
+    public void updateConditions() {
+        
+    }
     
 }

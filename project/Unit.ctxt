@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.params=health\ attack\ gameMap\ stamina
+comment0.target=Unit(int,\ double,\ Map,\ int)
+comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Unit\n
+comment1.params=
+comment1.target=int\ getHealth()
+comment1.text=\n\ Returns\ the\ amount\ of\ remaining\ health\ \n
+comment2.params=
+comment2.target=double\ getAttack()
+comment2.text=\n\ Returns\ the\ attack\ stat\ of\ the\ unit\n
+comment3.params=
+comment3.target=double\ getDefense()
+comment3.text=\n\ Returns\ the\ defense\ stat\ of\ the\ unit\n
+comment4.params=
+comment4.target=int\ getXPos()
+comment5.params=
+comment5.target=int\ getYPos()
+comment6.params=damage
+comment6.target=boolean\ hit(double)
+comment6.text=\n\ Takes\ damage.\ Returns\ whether\ or\ not\ the\ unit\ is\ still\ alive.\n
+comment7.params=
+comment7.target=int\ getStamina()
+comment8.params=usedStam
+comment8.target=void\ updateStam(int)
+numComments=9
