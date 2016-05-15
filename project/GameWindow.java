@@ -20,7 +20,7 @@ public class GameWindow extends JFrame{
      * Constructs a new game window.
      */
     public GameWindow() {
-        map = new Map(width/6, height/6);
+        map = new Map(width/6, height/6, this);
     }
     
     /**

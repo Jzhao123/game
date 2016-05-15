@@ -12,24 +12,58 @@ public class Map {
     private int width, height;
     private final static int scale = 3;
     private final static int size = 2;
+    private GameWindow window;
 
     /**
      * Constructor for objects of class Map
      */
-    public Map(int mapWidth, int mapHeight) {
+    public Map(int mapWidth, int mapHeight, GameWindow gameWindow) {
         width = mapWidth;
         height = mapHeight;
         landscape = new Terrain[width*scale][height*scale];
         buildings = new Building[width*scale][height*scale];
         units = new Unit[width][height];
         players = new Player[2];
+        window = gameWindow;
+    }
+    
+    /**
+     * Gets the unit at the said location.
+     */
+    public Unit getUnit(int w, int h) {
+        return units[w/(size*scale)][h/(size*scale)];
+    }
+    
+    /**
+     * Returns if the selected square is in the spawn zone.
+     */
+    public boolean canSpawn(int w, int h) {
+        return true;
+        //This will be changed later
+    }
+    
+    /**
+     * Returns the actual player of the game (not the computer).
+     */
+    public Player getHumanPlayer() {
+        return players[0];
+    }
+    
+    /**
+     * Returns the computer player of the game.
+     */
+    public Player getCompPlayer() {
+        return players[1];
     }
     
     /**
      * Adds a unit to the map.
      */
-    public void addUnit(Unit u, int xPos, int yPos) {
-        units[xPos][yPos] = u;
+    public void addUnit(int xPos, int yPos) {
+        Unit u = Units.getLegionnaire(this);
+        u.setPlayer(players[0]);
+        units[xPos/(size*scale)][yPos/(size*scale)] = u;
+        players[0].spawnUnit();
     }
     
     /**

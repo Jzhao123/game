@@ -12,18 +12,25 @@ public class Unit {
     private int maxStam, curStam;
     private Color color;
     private Player player;
+    private Unit target;
 
     /**
      * Constructor for objects of class Unit
      */
-    public Unit(int health, double attack, Map gameMap, int stamina, Color c, Player person) {
+    public Unit(int health, double attack, Map gameMap, int stamina, Color c) {
         hp = maxhp = health;
         atk = attack;//Stock Attack is 50, increases as exp goes up
         def = 0;//Precondition: Defense must be between 0 and 1
         exp = 0;
         curStam = maxStam = stamina;
         color = c;
-        player = person;
+    }
+    
+    /**
+     * Assigns the unit to a player.
+     */
+    public void setPlayer(Player p) {
+        player = p;
     }
     
     /**
@@ -102,6 +109,20 @@ public class Unit {
      */
     public int getStamina() {
         return curStam;
+    }
+    
+    /**
+     * Returns the current target of the unit
+     */
+    public Unit getTarget() {
+        return target;
+    }
+    
+    /**
+     * Sets a new target for the unit
+     */
+    public void setTarget(Unit u) {
+        target = u;
     }
     
     /**
