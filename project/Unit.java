@@ -13,17 +13,25 @@ public class Unit {
     private Color color;
     private Player player;
     private Unit target;
+    private Map map;
 
     /**
      * Constructor for objects of class Unit
      */
-    public Unit(int health, double attack, Map gameMap, int stamina, Color c) {
+    public Unit(int health, double attack, int stamina, Color c) {
         hp = maxhp = health;
         atk = attack;//Stock Attack is 50, increases as exp goes up
         def = 0;//Precondition: Defense must be between 0 and 1
         exp = 0;
         curStam = maxStam = stamina;
         color = c;
+    }
+    
+    /**
+     * Adds a map to the unit.
+     */
+    public void setMap(Map gameMap) {
+        map = gameMap;
     }
     
     /**

@@ -22,24 +22,41 @@ public class Map {
         height = mapHeight;
         landscape = new Terrain[width*scale][height*scale];
         buildings = new Building[width*scale][height*scale];
-        units = new Unit[width][height];
+        units = new Unit[width*scale][height*scale];
         players = new Player[2];
         window = gameWindow;
     }
     
     /**
-     * Gets the unit at the said location.
+     * Gets the unit at the said location *on the window*.
      */
     public Unit getUnit(int w, int h) {
-        return units[w/(size*scale)][h/(size*scale)];
+        Unit u = null;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                u = units[w/scale + i][w/scale + j];
+                if (u != null) {
+                    return u;
+                }
+            }
+        }
+        return u;
     }
     
     /**
      * Returns if the selected square is in the spawn zone.
      */
     public boolean canSpawn(int w, int h) {
+        Unit u = null;
+        for (int i = -(size/2); i < (size/2); i++) {
+            for (int j = -(size/2); j < (size/2); j++) {
+                u = units[w/scale + i][w/scale + j];
+                if (u != null) {
+                    return false;
+                }
+            }
+        }
         return true;
-        //This will be changed later
     }
     
     /**
@@ -60,7 +77,7 @@ public class Map {
      * Adds a unit to the map.
      */
     public void addUnit(int xPos, int yPos) {
-        Unit u = Units.getLegionnaire(this);
+        Unit u = Units.getLegionnaire();
         u.setPlayer(players[0]);
         units[xPos/(size*scale)][yPos/(size*scale)] = u;
         players[0].spawnUnit();
@@ -85,10 +102,9 @@ public class Map {
     }
     
     /**
-     * Moves a unit at (ox, oy) towards a destination at (nx, ny).
-     * [Must account for other units, terrain, buildings, etc. -- not an easy method]
+     * Moves a unit at (ox, oy) towards a destination at (nx, ny)
      */
-    public void moveUnit(int ox, int oy, int nx, int ny) {
+    private void moveUnit(int ox, int oy, int nx, int ny) {
         if(units[ox][oy] != null)
         {
             if((Math.abs(ox-nx) + Math.abs(oy-ny))>units[ox][oy].getStamina())
@@ -108,9 +124,26 @@ public class Map {
     }
     
     /**
+     * Automoves a single unit on the map (does not initiate conflict).
+     * [Must account for other units, terrain, buildings, etc. -- not an easy method]
+     */
+    private void autoMove(Unit u) {
+        //help pls
+    }
+    
+    /**
+     * Determines whether or not a unit is in range; if so, returns that unit.
+     */
+    private Unit getUnitInRange(Unit u) {
+        //too tired for this
+        return null;
+    }
+    
+    /**
      * Simulates combat between two units.
      */
-    private void combat(Unit attacker,Unit defender) {
+    private void combat(Unit attacker, Unit defender) {
+        //Sometime in the future this needs to take buildings into account as well
         if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef())))))
         {
             units[defender.getXPos()][defender.getYPos()] = null;
@@ -134,11 +167,11 @@ public class Map {
                 g.fillRect(size*i, size*j, size, size);
             }
         }
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width*scale; i++) {
+            for (int j = 0; j < height*scale; j++) {
                 if (units[i][j] != null) {
                     g.setColor(units[i][j].getColor());
-                    g.fillOval(size*scale*i, size*scale*j, size*scale, size*scale);
+                    g.fillOval(size*scale*(i-scale/2), size*scale*(j-scale/2), size*scale, size*scale);
                 }
             }
         }
@@ -148,7 +181,30 @@ public class Map {
      * Updates the current conditions of the game map.
      */
     public void updateConditions() {
-        
+        //sometime in the future this needs to take buildings into account as well
+        for (int i = 0; i < units.length; i++) {
+            for (int j = 0; j < units[0].length; j++) {
+                if (units[i][j] != null) {
+                    autoMove(units[i][j]);
+                }
+            }
+        }
+        boolean[][] fought = new boolean[units.length][units[0].length];
+        Unit u, other;
+        for (int i = 0; i < units.length; i++) {
+            for (int j = 0; j < units[0].length; j++) {
+                if (!fought[i][j]) {
+                    u = units[i][j];
+                    if (u != null) {
+                        other = getUnitInRange(u);
+                        if (other != null) {
+                            combat(u, other);
+                            fought[other.getXPos()][other.getYPos()] = true;
+                        }
+                    }
+                }
+            }
+        }
     }
     
 }

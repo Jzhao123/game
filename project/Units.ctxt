@@ -1,5 +1,5 @@
 #BlueJ class context
-comment0.params=map
-comment0.target=Unit\ getLegionnaire(Map)
+comment0.params=
+comment0.target=Unit\ getLegionnaire()
 comment0.text=\n\ Returns\ a\ default\ leigonnaire.\ \n
 numComments=1
