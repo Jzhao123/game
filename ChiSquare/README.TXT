@@ -4,12 +4,9 @@ Tell the reader (someone who does not know anything about this project)
 all he/she needs to know. The comments should usually include at least:
 ------------------------------------------------------------------------
 
-PROJECT TITLE: (Red China) Army Simulator
-PURPOSE OF PROJECT: To spread communism. 
-VERSION or DATE: v.1
-HOW TO START THIS PROJECT:...
+PROJECT TITLE:
+PURPOSE OF PROJECT:
+VERSION or DATE:
+HOW TO START THIS PROJECT:
 AUTHORS:
 USER INSTRUCTIONS:
-
-Note to Self (Kavin): 
--look at map class to see initialize map class to createmap 
