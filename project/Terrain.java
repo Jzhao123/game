@@ -23,6 +23,7 @@ public class Terrain {
      */
     public int getXdef() {
         return xdef;
+        //hi
     }
     
     /**
