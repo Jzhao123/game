@@ -56,6 +56,24 @@ public class Map {
         }
     }
     //set water border
+    int negCol = 0;
+    int negRow = 0;
+    for(int twice=0; twice<2;twice++)
+    {
+        for(int r=0; r< landscape.length();r++)
+        {
+            landscape[r][negCol];
+        }
+        negCol = landscape[0].length()-1;
+    }
+    for(int twicenice=0; twicenice<2;twicenice++)
+    {
+        for(int col=0; r< landscape[0].length();col++)
+        {
+            landscape[negRow][col];
+        }
+        negRow = landscape.length()-1;
+    }
     //set road
     //set hospital
     //set mountain
