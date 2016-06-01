@@ -42,6 +42,36 @@ public class Map {
         }
         return u;
     }
+    /*
+    *Creates preset map
+    */
+    public void presetMap()
+    {
+    //set all to null.
+    for(int a=0; a<landscape.length();a++)
+    {
+        for(int b=0; b<landscape[0].length();b++)
+        {
+            landscape[a][b]=null
+        }
+    }
+    //set water border
+    //set road
+    //set hospital
+    //set mountain
+    //setsfield for remaining portions
+    for(int c=0; c<landscape.length();c++)
+    {
+        for(int c=0; c<landscape[0].length();c++)
+        {
+            if(landscape[a][b]=null)
+            {
+                landscape[a][b]== getField();
+            }
+        }
+    }
+    
+    }
     
     /**
      * Returns if the selected square is in the spawn zone.
