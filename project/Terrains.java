@@ -31,4 +31,11 @@ public class Terrains {
     public static Terrain getRoad() {
         return new Terrain(0, 0, Color.lightGray);
     }
+    /*
+    * Returns a default Hospital terrain that will units inside of it.
+    */
+    public static Terrain getHospital()
+    {
+        return new Terrain(50,0,Color.white);
+    }
 }
