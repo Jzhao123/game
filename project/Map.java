@@ -102,14 +102,27 @@ public class Map {
             }
         }
         //set road (should I make the roads just a cross along the map like --|--)
-        for
-        //set hospital building and terrain
+        int yDiv = landscape[0].length()/2;
+        int xDiv = landscape.length()/2 
+        int xLine=1;
+        int yLine=1;
+        while(xLine<landscape[0].length()-1)
+        {
+            landscape[xDiv][xLine]=generator.getRoad();
+            xLine++;
+        }
+        while(yLine<landscape.length()-1)
+        {
+            landscape[yLine][yDiv]=generator.getRoad();
+            yLine++;
+        }
+        //set hospital terrain
         int numHosp= (Math.random*4);
         int hospCount=0;
         while(hospCount<numHosp)
         {
-            int x=Math.random()*(landscape[].length()-1)+1;
-            int y=Math.random()*(landscape.length()-1)+1;
+            int x=(Math.random()*landscape[].length()-1)+1;
+            int y=(Math.random()*landscape.length()-1)+1;
             if(landscape[x][y]==null)
             {
                 landscape[x][y]=generator.getHospital();
@@ -117,14 +130,47 @@ public class Map {
             }
         }
         //set mountain
-        
+        int chainLength=0;
+        int chainCount=0;
+        int mountCount=0; //:)
+        int mountLimit=(Math.random*6)+1;
+        int directionM=0;
+        while(mountCount<mountLimit)
+        {
+            int x=(Math.random()*landscape[].length()-1)+1;
+            int y=(Math.random()*landscape.length()-1)+1;
+            if(landscape[x][y]==null)
+            {
+                chainLength=(Math.random()*3)+1
+                directionM=(Math.random()*5)+1;
+                for(int chainCount=0;chainCount<chainLength;chainCount++)
+                {
+                    if(chainCount==0)
+                    {
+                        landscape[x][y]=generator.getMountains();
+                    }
+                    else
+                    {
+                        if(directionM>2)
+                        {
+                            landscape[x][y+(directionM%2)]= generator.getMountains();
+                        }
+                        else
+                        {
+                            landscape[x+(directionM)][y]=generator.getMountains();
+                        }   
+                   }
+                }
+                mountCount++;
+            }
+        }
         //sets camps
         int numCamps= (Math.random*8)+1;
         int campsCount=0;
         while(campsCount<numCamps)
         {
-            int x=Math.random()*(landscape[].length()-1)+1;
-            int y=Math.random()*(landscape.length()-1)+1;
+            int x=(Math.random()*landscape[].length()-1)+1;
+            int y=(Math.random()*landscape.length()-1)+1;
             if(landscape[x][y]==null)
             {
                 landscape[x][y]=gen.getCamp(1,1,x,y);
