@@ -1,14 +1,17 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Terrain\ getWater()
-comment0.text=\n\ Returns\ a\ default\ water\ terrain.\n
+comment0.text=\r\n\ Returns\ a\ default\ water\ terrain.\r\n
 comment1.params=
 comment1.target=Terrain\ getMountain()
-comment1.text=\n\ Returns\ a\ default\ mountain\ terrain.\n
+comment1.text=\r\n\ Returns\ a\ default\ mountain\ terrain.\r\n
 comment2.params=
 comment2.target=Terrain\ getField()
-comment2.text=\n\ Returns\ a\ default\ field\ terrain.\n
+comment2.text=\r\n\ Returns\ a\ default\ field\ terrain.\r\n
 comment3.params=
 comment3.target=Terrain\ getRoad()
-comment3.text=\n\ Returns\ a\ default\ road\ terrain.\n
-numComments=4
+comment3.text=\r\n\ Returns\ a\ default\ road\ terrain.\r\n
+comment4.params=
+comment4.target=Terrain\ getHospital()
+comment4.text=\r\n\ Returns\ a\ default\ Hospital\ terrain\ that\ will\ units\ inside\ of\ it.\r\n
+numComments=5

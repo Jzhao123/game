@@ -14,6 +14,7 @@ public class Map {
     private final static int scale = 3;
     private final static int size = 2;
     private GameWindow window;
+    private Buildings gen;
 
     /**
      * Constructor for objects of class Map
@@ -27,7 +28,7 @@ public class Map {
         players = new Player[2];
         window = gameWindow;
         generator = new Terrains();
-        gen = new Building();
+        gen = new Buildings();
     }
     
     /**
@@ -65,13 +66,13 @@ public class Map {
         {
             for(int r=0; r< landscape.length;r++)
             {
-                if(negCol!=0 && row>landscape.[0]length()/2) // adds some more sporadic "natural" spawn patterns
+                if(negCol!=0 && r>landscape[0].length/2) // adds some more sporadic "natural" spawn patterns
                 {
                     landscape[r][negCol] = generator.getWater();
                 }
                 else
                 {
-                   landscape[r][negCol] = generator.getMountains(); 
+                   landscape[r][negCol] = generator.getMountain(); 
                 }
             }
             negCol = landscape[0].length-1;
@@ -80,49 +81,49 @@ public class Map {
         {
             for(int col=0; col < landscape[0].length;col++)
             {
-                if()
+                //if()
                 landscape[negRow][col] = generator.getWater();
             }
             negRow = landscape.length -1;
         }
         //set river randomly
-        int e=(Math.random()*(landscape.length()-1)+1;
-        int f;
+        int e=(int)(Math.random()*landscape.length-1)+1;
+        int f=0;
         for(int rivercount=0;rivercount<3;rivercount++)
         {
-            while(int e<landscape.length()&&f<landscape[0].length())
+            while(e<landscape.length&&f<landscape[0].length)
             {
-                f=e/(landscape.length()/scale);
-                if(rivercount=2)
+                f=e/(landscape.length/scale);
+                if(rivercount==2)
                 {
-                    f=landscape.length()-f; // can someone pls check the logic of the river spawn.
+                    f=landscape.length-f; // can someone pls check the logic of the river spawn.
                 }
                 landscape[e][f]=generator.getWater();
                 e++;
             }
         }
         //set road (should I make the roads just a cross along the map like --|--)
-        int yDiv = landscape[0].length()/2;
-        int xDiv = landscape.length()/2 
+        int yDiv = landscape[0].length/2;
+        int xDiv = landscape.length/2; 
         int xLine=1;
         int yLine=1;
-        while(xLine<landscape[0].length()-1)
+        while(xLine<landscape[0].length-1)
         {
             landscape[xDiv][xLine]=generator.getRoad();
             xLine++;
         }
-        while(yLine<landscape.length()-1)
+        while(yLine<landscape.length-1)
         {
             landscape[yLine][yDiv]=generator.getRoad();
             yLine++;
         }
         //set hospital terrain
-        int numHosp= (Math.random*4);
+        int numHosp= ((int)Math.random()*4);
         int hospCount=0;
         while(hospCount<numHosp)
         {
-            int x=(Math.random()*landscape[].length()-1)+1;
-            int y=(Math.random()*landscape.length()-1)+1;
+            int x=((int)Math.random()*landscape[0].length-1)+1;
+            int y=((int)Math.random()*landscape.length-1)+1;
             if(landscape[x][y]==null)
             {
                 landscape[x][y]=generator.getHospital();
@@ -131,46 +132,46 @@ public class Map {
         }
         //set mountain
         int chainLength=0;
-        int chainCount=0;
         int mountCount=0; //:)
-        int mountLimit=(Math.random*6)+1;
+        int mountLimit=((int)Math.random()*6)+1;
         int directionM=0;
         while(mountCount<mountLimit)
         {
-            int x=(Math.random()*landscape[].length()-1)+1;
-            int y=(Math.random()*landscape.length()-1)+1;
+            int x=((int)Math.random()*(landscape[0].length-1))+1;
+            int y=((int)Math.random()*landscape.length-1)+1;
             if(landscape[x][y]==null)
             {
-                chainLength=(Math.random()*3)+1
-                directionM=(Math.random()*5)+1;
+                chainLength=((int)Math.random()*3)+1;
+                directionM=((int)Math.random()*5)+1;
                 for(int chainCount=0;chainCount<chainLength;chainCount++)
                 {
                     if(chainCount==0)
                     {
-                        landscape[x][y]=generator.getMountains();
+                        landscape[x][y]=generator.getMountain();
                     }
                     else
                     {
                         if(directionM>2)
                         {
-                            landscape[x][y+(directionM%2)]= generator.getMountains();
+                            landscape[x][y+(directionM%2)]= generator.getMountain();
                         }
                         else
                         {
-                            landscape[x+(directionM)][y]=generator.getMountains();
+                            landscape[x+(directionM)][y]=generator.getMountain();
                         }   
                    }
                 }
                 mountCount++;
             }
         }
+        /*
         //sets camps
-        int numCamps= (Math.random*8)+1;
+        int numCamps= ((int)Math.random()*8)+1;
         int campsCount=0;
         while(campsCount<numCamps)
         {
-            int x=(Math.random()*landscape[].length()-1)+1;
-            int y=(Math.random()*landscape.length()-1)+1;
+            int x=((int)Math.random()*landscape[0].length-1)+1;
+            int y=((int)Math.random()*landscape.length-1)+1;
             if(landscape[x][y]==null)
             {
                 landscape[x][y]=gen.getCamp(1,1,x,y);
@@ -182,7 +183,7 @@ public class Map {
         int castCount=0;
         while(castCount<numCast)
         {
-            int x=Math.random()*(landscape[].length()-1)+1;
+            int x=Math.random()*(landscape[0].length()-1)+1;
             int y=Math.random()*(landscape.length()-1)+1;
             if(landscape[x][y]==null)
             {
@@ -190,6 +191,8 @@ public class Map {
                 castCount++;
             }
         }
+        //Set this aside cause I need to figure out a way to implement the building onto a map.
+        */
         //setsfield for remaining portions
         for(int a=0; a<landscape.length;a++)
         {

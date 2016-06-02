@@ -1,8 +1,11 @@
 #BlueJ class context
 comment0.params=length\ width\ xloc\ yloc
 comment0.target=Building\ getCamp(int,\ int,\ int,\ int)
-comment0.text=\n\ Creates\ a\ standard\ fortified\ camp.\n
+comment0.text=\r\n\ Creates\ a\ standard\ fortified\ camp.\r\n
 comment1.params=length\ width\ xloc\ yloc
 comment1.target=Building\ getCastle(int,\ int,\ int,\ int)
-comment1.text=\n\ Creates\ a\ standard\ castle.\n
-numComments=2
+comment1.text=\r\n\ Creates\ a\ standard\ castle.\r\n
+comment2.params=length\ width\ xloc\ yloc
+comment2.target=Building\ getHospital(int,\ int,\ int,\ int)
+comment2.text=\r\n\ Creates\ a\ hospital.\ \r\n\ The\ hospital\ will\ reside\ in\ a\ hospital\ terrain\ and\ will\ be\ found\ somewhere\ in\ the\ hospital\ terrain.\r\n
+numComments=3

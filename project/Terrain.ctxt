@@ -1,14 +1,14 @@
 #BlueJ class context
 comment0.params=speedCost\ defBuff\ appearance
 comment0.target=Terrain(int,\ int,\ java.awt.Color)
-comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Terrain\n
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Terrain\r\n
 comment1.params=
 comment1.target=int\ getXdef()
-comment1.text=\n\ Returns\ the\ defense\ buff.\n
+comment1.text=\r\n\ Returns\ the\ defense\ buff.\r\n
 comment2.params=
 comment2.target=double\ getXspd()
-comment2.text=\n\ Returns\ the\ speed\ cost.\n
+comment2.text=\r\n\ Returns\ the\ speed\ cost.\r\n
 comment3.params=
 comment3.target=java.awt.Color\ getColor()
-comment3.text=\n\ Returns\ the\ color\ of\ the\ tile.\n
+comment3.text=\r\n\ Returns\ the\ color\ of\ the\ tile.\r\n
 numComments=4
