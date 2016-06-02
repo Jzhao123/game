@@ -101,7 +101,8 @@ public class Map {
                 e++;
             }
         }
-        //set road
+        //set road (should I make the roads just a cross along the map like --|--)
+        for
         //set hospital building and terrain
         int numHosp= (Math.random*4);
         int hospCount=0;
@@ -111,7 +112,7 @@ public class Map {
             int y=Math.random()*(landscape.length()-1)+1;
             if(landscape[x][y]==null)
             {
-                landscape[x][y]=gen.getHospital();
+                landscape[x][y]=generator.getHospital();
                 hospCount++;
             }
         }
@@ -126,7 +127,7 @@ public class Map {
             int y=Math.random()*(landscape.length()-1)+1;
             if(landscape[x][y]==null)
             {
-                landscape[x][y]=gen.getCamp();
+                landscape[x][y]=gen.getCamp(1,1,x,y);
                 campsCount++;
             }
         }
@@ -139,7 +140,7 @@ public class Map {
             int y=Math.random()*(landscape.length()-1)+1;
             if(landscape[x][y]==null)
             {
-                landscape[x][y]=gen.getCastle();
+                landscape[x][y]=gen.getCastle(1,1,x,y);
                 castCount++;
             }
         }
@@ -222,7 +223,7 @@ public class Map {
         {
             if((Math.abs(ox-nx) + Math.abs(oy-ny))>units[ox][oy].getStamina())
             {
-                //Message says can't move
+                System.out.print("Unable to move forward.");
             }
             else
             {
@@ -232,7 +233,7 @@ public class Map {
             }
         }
         else {
-            //Message says no unit on grid position
+            System.out.print("There is no unit in that location.");
         }
     }
     
