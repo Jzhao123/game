@@ -6,6 +6,7 @@ import java.awt.image.*;
  */
 public class Map {
     private Terrain[][] landscape;
+    private Terrains generator;
     private Building[][] buildings;
     private Unit[][] units;
     private Player[] players;
@@ -25,6 +26,7 @@ public class Map {
         units = new Unit[width*scale][height*scale];
         players = new Player[2];
         window = gameWindow;
+        generator = new Terrains();
     }
     
     /**
@@ -47,48 +49,48 @@ public class Map {
     */
     public void presetMap()
     {
-    //set all to null.
-    for(int a=0; a<landscape.length();a++)
-    {
-        for(int b=0; b<landscape[0].length();b++)
+        //set all to null.
+        for(int a=0; a<landscape.length;a++)
         {
-            landscape[a][b]=null
-        }
-    }
-    //set water border
-    int negCol = 0;
-    int negRow = 0;
-    for(int twice=0; twice<2;twice++)
-    {
-        for(int r=0; r< landscape.length();r++)
-        {
-            landscape[r][negCol];
-        }
-        negCol = landscape[0].length()-1;
-    }
-    for(int twicenice=0; twicenice<2;twicenice++)
-    {
-        for(int col=0; r< landscape[0].length();col++)
-        {
-            landscape[negRow][col];
-        }
-        negRow = landscape.length()-1;
-    }
-    //set road
-    //set hospital
-    //set mountain
-    //setsfield for remaining portions
-    for(int c=0; c<landscape.length();c++)
-    {
-        for(int c=0; c<landscape[0].length();c++)
-        {
-            if(landscape[a][b]=null)
+            for(int b=0; b<landscape[0].length;b++)
             {
-                landscape[a][b]== getField();
+                landscape[a][b]=null;
             }
         }
-    }
-    
+        //set water border
+        int negCol = 0;
+        int negRow = 0;
+        for(int twice=0; twice<2;twice++)
+        {
+            for(int r=0; r< landscape.length;r++)
+            {
+                landscape[r][negCol] = generator.getWater();
+            }
+            negCol = landscape[0].length-1;
+        }
+        for(int twicenice=0; twicenice<2;twicenice++)
+        {
+            for(int col=0; col < landscape[0].length;col++)
+            {
+                landscape[negRow][col] = generator.getWater();
+            }
+            negRow = landscape.length -1;
+        }
+        //set road
+        //set hospital
+        //set mountain
+        //setsfield for remaining portions
+        for(int a=0; a<landscape.length;a++)
+        {
+            for(int b=0; b<landscape[0].length;b++)
+            {
+                if(landscape[a][b] == null)
+                {
+                    landscape[a][b] = generator.getField();
+                }
+            }
+        }
+
     }
     
     /**
