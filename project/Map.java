@@ -64,7 +64,14 @@ public class Map {
         {
             for(int r=0; r< landscape.length;r++)
             {
-                landscape[r][negCol] = generator.getWater();
+                if(negCol!=0 && row>landscape.[0]length()/2) // adds some more sporadic "natural" spawn patterns
+                {
+                    landscape[r][negCol] = generator.getWater();
+                }
+                else
+                {
+                   landscape[r][negCol] = generator.getMountains(); 
+                }
             }
             negCol = landscape[0].length-1;
         }
@@ -72,9 +79,26 @@ public class Map {
         {
             for(int col=0; col < landscape[0].length;col++)
             {
+                if()
                 landscape[negRow][col] = generator.getWater();
             }
             negRow = landscape.length -1;
+        }
+        //set river randomly
+        int e=(Math.random()*(landscape.length()-1)+1;
+        int f;
+        for(int rivercount=0;rivercount<3;rivercount++)
+        {
+            while(int e<landscape.length()&&f<landscape[0].length())
+            {
+                f=e%(landscape.length()/scale);
+                if(rivercount=2)
+                {
+                    f=landscape.length()-f;
+                }
+                landscape[e][f]=generator.getWater();
+                e++;
+            }
         }
         //set road
         //set hospital
@@ -90,6 +114,8 @@ public class Map {
                 }
             }
         }
+        //sets camps
+        for()
 
     }
     
