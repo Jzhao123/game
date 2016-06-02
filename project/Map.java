@@ -27,6 +27,7 @@ public class Map {
         players = new Player[2];
         window = gameWindow;
         generator = new Terrains();
+        gen = new Building();
     }
     
     /**
@@ -91,18 +92,57 @@ public class Map {
         {
             while(int e<landscape.length()&&f<landscape[0].length())
             {
-                f=e%(landscape.length()/scale);
+                f=e/(landscape.length()/scale);
                 if(rivercount=2)
                 {
-                    f=landscape.length()-f;
+                    f=landscape.length()-f; // can someone pls check the logic of the river spawn.
                 }
                 landscape[e][f]=generator.getWater();
                 e++;
             }
         }
         //set road
-        //set hospital
+        //set hospital building and terrain
+        int numHosp= (Math.random*4);
+        int hospCount=0;
+        while(hospCount<numHosp)
+        {
+            int x=Math.random()*(landscape[].length()-1)+1;
+            int y=Math.random()*(landscape.length()-1)+1;
+            if(landscape[x][y]==null)
+            {
+                landscape[x][y]=gen.getHospital();
+                hospCount++;
+            }
+        }
         //set mountain
+        
+        //sets camps
+        int numCamps= (Math.random*8)+1;
+        int campsCount=0;
+        while(campsCount<numCamps)
+        {
+            int x=Math.random()*(landscape[].length()-1)+1;
+            int y=Math.random()*(landscape.length()-1)+1;
+            if(landscape[x][y]==null)
+            {
+                landscape[x][y]=gen.getCamp();
+                campsCount++;
+            }
+        }
+        //sets Castle
+        int numCast= (Math.random*5)+1;
+        int castCount=0;
+        while(castCount<numCast)
+        {
+            int x=Math.random()*(landscape[].length()-1)+1;
+            int y=Math.random()*(landscape.length()-1)+1;
+            if(landscape[x][y]==null)
+            {
+                landscape[x][y]=gen.getCastle();
+                castCount++;
+            }
+        }
         //setsfield for remaining portions
         for(int a=0; a<landscape.length;a++)
         {
@@ -114,9 +154,6 @@ public class Map {
                 }
             }
         }
-        //sets camps
-        for()
-
     }
     
     /**
