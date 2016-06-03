@@ -330,7 +330,11 @@ public class Map {
        {
            return northwest;
     }
-    
+ if(northeast != null)
+       {
+           return northeast;
+    }
+   
     
     
     return null;
