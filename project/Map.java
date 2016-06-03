@@ -290,6 +290,7 @@ public class Map {
      * Automoves a single unit on the map (does not initiate conflict).
      * [Must account for other units, terrain, buildings, etc. -- not an easy method]
      */
+    //just account for units, buildings
     private void autoMove(Unit u) {
         //help pls
     }
