@@ -318,7 +318,10 @@ public class Map {
        {
            return north;
     }
-    
+    if(west != null)
+       {
+           return west;
+    }
     
     return null;
 }
