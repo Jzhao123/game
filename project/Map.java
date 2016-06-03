@@ -30,7 +30,7 @@ public class Map {
         generator = new Terrains();
         gen = new Buildings();
     }
-    
+
     /**
      * Gets the unit at the said location *on the window*.
      */
@@ -46,9 +46,10 @@ public class Map {
         }
         return u;
     }
+
     /*
-    *Creates preset map
-    */
+     *Creates preset map
+     */
     public void presetMap()
     {
         //set all to null.
@@ -72,7 +73,7 @@ public class Map {
                 }
                 else
                 {
-                   landscape[r][negCol] = generator.getMountain(); 
+                    landscape[r][negCol] = generator.getMountain(); 
                 }
             }
             negCol = landscape[0].length-1;
@@ -159,7 +160,7 @@ public class Map {
                         {
                             landscape[x+(directionM)][y]=generator.getMountain();
                         }   
-                   }
+                    }
                 }
                 mountCount++;
             }
@@ -170,29 +171,29 @@ public class Map {
         int campsCount=0;
         while(campsCount<numCamps)
         {
-            int x=((int)Math.random()*landscape[0].length-1)+1;
-            int y=((int)Math.random()*landscape.length-1)+1;
-            if(landscape[x][y]==null)
-            {
-                landscape[x][y]=gen.getCamp(1,1,x,y);
-                campsCount++;
-            }
+        int x=((int)Math.random()*landscape[0].length-1)+1;
+        int y=((int)Math.random()*landscape.length-1)+1;
+        if(landscape[x][y]==null)
+        {
+        landscape[x][y]=gen.getCamp(1,1,x,y);
+        campsCount++;
+        }
         }
         //sets Castle
         int numCast= (Math.random*5)+1;
         int castCount=0;
         while(castCount<numCast)
         {
-            int x=Math.random()*(landscape[0].length()-1)+1;
-            int y=Math.random()*(landscape.length()-1)+1;
-            if(landscape[x][y]==null)
-            {
-                landscape[x][y]=gen.getCastle(1,1,x,y);
-                castCount++;
-            }
+        int x=Math.random()*(landscape[0].length()-1)+1;
+        int y=Math.random()*(landscape.length()-1)+1;
+        if(landscape[x][y]==null)
+        {
+        landscape[x][y]=gen.getCastle(1,1,x,y);
+        castCount++;
+        }
         }
         //Set this aside cause I need to figure out a way to implement the building onto a map.
-        */
+         */
         //setsfield for remaining portions
         for(int a=0; a<landscape.length;a++)
         {
@@ -205,7 +206,7 @@ public class Map {
             }
         }
     }
-    
+
     /**
      * Returns if the selected square is in the spawn zone.
      */
@@ -221,21 +222,21 @@ public class Map {
         }
         return true;
     }
-    
+
     /**
      * Returns the actual player of the game (not the computer).
      */
     public Player getHumanPlayer() {
         return players[0];
     }
-    
+
     /**
      * Returns the computer player of the game.
      */
     public Player getCompPlayer() {
         return players[1];
     }
-    
+
     /**
      * Adds a unit to the map.
      */
@@ -245,14 +246,14 @@ public class Map {
         units[xPos/(size*scale)][yPos/(size*scale)] = u;
         players[0].spawnUnit();
     }
-    
+
     /**
      * Adds a terrain landscape to the map.
      */
     public void addTerrains(Terrain[][] terrains) {
         landscape = terrains;
     }
-    
+
     /**
      * Adds a building to the map.
      */
@@ -263,7 +264,7 @@ public class Map {
             buildings[xlocs[i]][ylocs[i]] = b;
         }
     }
-    
+
     /**
      * Moves a unit at (ox, oy) towards a destination at (nx, ny)
      */
@@ -285,7 +286,7 @@ public class Map {
             System.out.print("There is no unit in that location.");
         }
     }
-    
+
     /**
      * Automoves a single unit on the map (does not initiate conflict).
      * [Must account for other units, terrain, buildings, etc. -- not an easy method]
@@ -294,65 +295,65 @@ public class Map {
     private void autoMove(Unit u) {
         //help pls
     }
-    
+
     /**
      * Determines whether or not a unit is in range; if so, returns that unit.
      */
     private Unit getUnitInRange(Unit u) { //assume unit 1 until that method is created
         //too tired for this
-       //look at units array at top
-       Unit south = units[u.getXPos()][u.getYPos()+1];
-       Unit north = units[u.getXPos()][u.getYPos()-1];
-       Unit west = units[u.getXPos() - 1][u.getYPos()];
-       Unit east = units[u.getXPos() + 1][u.getYPos()];
-       Unit northwest = units[u.getXPos() - 1][u.getYPos() - 1];
-       Unit northeast = units[u.getXPos() + 1][u.getYPos() - 1];
-       Unit southwest = units[u.getXPos() - 1][u.getYPos() + 1];
-       Unit southeast = units[u.getXPos() + 1][u.getYPos() + 1];
-       if(south != null)
-       {
-           return south;
+        //look at units array at top
+        Unit south = units[u.getXPos()][u.getYPos()+1];
+        Unit north = units[u.getXPos()][u.getYPos()-1];
+        Unit west = units[u.getXPos() - 1][u.getYPos()];
+        Unit east = units[u.getXPos() + 1][u.getYPos()];
+        Unit northwest = units[u.getXPos() - 1][u.getYPos() - 1];
+        Unit northeast = units[u.getXPos() + 1][u.getYPos() - 1];
+        Unit southwest = units[u.getXPos() - 1][u.getYPos() + 1];
+        Unit southeast = units[u.getXPos() + 1][u.getYPos() + 1];
+        if(south != null)
+        {
+            return south;
+        }
+        //do for the rest
+        if(north != null)
+        {
+            return north;
+        }
+        if(west != null)
+        {
+            return west;
+        }
+        if(east != null)
+        {
+            return east;
+        }
+        if(northwest != null)
+        {
+            return northwest;
+        }
+        if(northeast != null)
+        {
+            return northeast;
+        }
+        if(southwest != null)
+        {
+            return southwest;
+        }
+        if(southeast != null)
+        {
+            return southeast;
+        }
+
+        // should work, check this when you do the checking andy
+
+        return null;
     }
-    //do for the rest
-     if(north != null)
-       {
-           return north;
-    }
-    if(west != null)
-       {
-           return west;
-    }
-     if(east != null)
-       {
-           return east;
-    }
-     if(northwest != null)
-       {
-           return northwest;
-    }
- if(northeast != null)
-       {
-           return northeast;
-    }
-     if(southwest != null)
-       {
-           return southwest;
-    }
-      if(southeast != null)
-       {
-           return southeast;
-    }
-    
-    // should work, check this when you do the checking andy
-    
-    
-    return null;
-}
+
     /**
      * Simulates combat between two units.
      */
     private void combat(Unit attacker, Unit defender) {
-        
+
         //Sometime in the future this needs to take buildings into account as well
         if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef())))))
         {
@@ -363,7 +364,7 @@ public class Map {
             units[attacker.getXPos()][attacker.getYPos()] = null;
         }
     }
-    
+
     /**
      * Draws the current state of the map into the graphics object.
      */
@@ -386,7 +387,7 @@ public class Map {
             }
         }
     }
-    
+
     /**
      * Updates the current conditions of the game map. 
      */
@@ -416,5 +417,5 @@ public class Map {
             }
         }
     }
-    
+
 }
