@@ -326,6 +326,10 @@ public class Map {
        {
            return east;
     }
+     if(northwest != null)
+       {
+           return northwest;
+    }
     
     
     
