@@ -8,7 +8,7 @@ public class Map {
     private Terrain[][] landscape;
     private Terrains generator;
     private Building[][] buildings;
-    private Unit[][] units;
+    private Unit[][] units; //map array, use to find adjacent squares
     private Player[] players;
     private int width, height;
     private final static int scale = 3;
@@ -297,9 +297,10 @@ public class Map {
     /**
      * Determines whether or not a unit is in range; if so, returns that unit.
      */
-    private Unit getUnitInRange(Unit u) {
+    private Unit getUnitInRange(Unit u) { //assume unit 1 until that method is created
         //too tired for this
-        return null;
+       //look at units array at top
+       return null;
     }
     
     /**
@@ -341,7 +342,7 @@ public class Map {
     }
     
     /**
-     * Updates the current conditions of the game map.
+     * Updates the current conditions of the game map. 
      */
     public void updateConditions() {
         //sometime in the future this needs to take buildings into account as well
