@@ -300,13 +300,26 @@ public class Map {
     private Unit getUnitInRange(Unit u) { //assume unit 1 until that method is created
         //too tired for this
        //look at units array at top
-       return null;
+       Unit south = units[u.getXPos()][u.getYPos()+1];
+       Unit north = units[u.getXPos()][u.getYPos()-1];
+       Unit west = units[u.getXPos() - 1][u.getYPos()];
+       Unit east = units[u.getXPos() + 1][u.getYPos()];
+       Unit northwest = units[u.getXPos() - 1][u.getYPos() - 1];
+       Unit northeast = units[u.getXPos() + 1][u.getYPos() - 1];
+       Unit southwest = units[u.getXPos() - 1][u.getYPos() + 1];
+       Unit southeast = units[u.getXPos() + 1][u.getYPos() + 1];
+       if(south != null)
+       {
+           return south;
     }
-    
+    //do for the rest
+    return null;
+}
     /**
      * Simulates combat between two units.
      */
     private void combat(Unit attacker, Unit defender) {
+        
         //Sometime in the future this needs to take buildings into account as well
         if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef())))))
         {
