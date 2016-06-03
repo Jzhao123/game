@@ -334,9 +334,9 @@ public class Map {
        {
            return northeast;
     }
-     if(south != null)
+     if(southwest != null)
        {
-           return south;
+           return southwest;
     }
     
     
