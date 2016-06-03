@@ -314,6 +314,12 @@ public class Map {
            return south;
     }
     //do for the rest
+     if(north != null)
+       {
+           return north;
+    }
+    
+    
     return null;
 }
     /**
