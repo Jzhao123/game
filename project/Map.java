@@ -334,7 +334,11 @@ public class Map {
        {
            return northeast;
     }
-   
+     if(south != null)
+       {
+           return south;
+    }
+    
     
     
     return null;
