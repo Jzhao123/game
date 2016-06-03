@@ -343,7 +343,7 @@ public class Map {
            return southeast;
     }
     
-    
+    // should work, check this when you do the checking andy
     
     
     return null;
