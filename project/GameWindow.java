@@ -51,7 +51,7 @@ public class GameWindow extends JFrame{
      * Initializes game circumstances
      */
     public void init() {
-        setTitle("El Proyecto de AP");
+        setTitle("APCS RTS Project");
         insets = getInsets();
         setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
         setResizable(false);
