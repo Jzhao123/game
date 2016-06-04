@@ -207,7 +207,7 @@ public class Map {
         }
     }
     //generates basic all-field map
-    public void generateBasic()
+    public Terrain[][] generateBasic()
     {
         for(int a=0; a<landscape.length;a++)
         {
@@ -219,6 +219,13 @@ public class Map {
                 }
             }
         }
+        return landscape;
+    }
+    public Building[][] generateCornerspawn()
+    {
+        buildings[0][0]=gen.getCamp(4,4,0,0);
+        buildings[buildings.length-1][buildings[0].length-1]=gen.getCamp(4,4,buildings[0].length-1,buildings.length);
+        return buildings;
     }
     /**
      * Returns if the selected square is in the spawn zone.
