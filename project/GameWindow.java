@@ -11,7 +11,7 @@ public class GameWindow extends JFrame{
     private final int height = 600;
     private Map map;
     private boolean running;
-    private final int fps = 30;
+    private final int fps = 15;
     
     private BufferedImage buffer;
     private Insets insets;
@@ -28,15 +28,19 @@ public class GameWindow extends JFrame{
      */
     public void run() {
         init();
+        System.out.println("\n\n\ninitialized\n\n\n");
         while (running) {
             long time = System.currentTimeMillis();
             update();
             draw();
             time = (1000/fps) - (System.currentTimeMillis() - time);
+            System.out.println(time);
             if (time > 0) {
                 try {
                     Thread.sleep(time);
+                    System.out.println("finished sleeping");
                 } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -55,6 +59,7 @@ public class GameWindow extends JFrame{
         setVisible(true);
         buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         map = Map.generateMap(width, height, this);
+        running = true;
     }
     
     /**
@@ -73,5 +78,4 @@ public class GameWindow extends JFrame{
         map.drawImage(bbg, buffer);
         g.drawImage(buffer, 0, 0, this);
     }
-    
 }

@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.*;
+import java.util.*;
 
 /**
  * Represents a map.
@@ -30,15 +31,32 @@ public class Map {
         generator = new Terrains();
         gen = new Buildings();
     }
+    
+    /**
+     * Prints the buildings.
+     */
+    public void printBuildings() {
+        int num = 0;
+        for (int i = 0; i < buildings.length; i++) {
+            System.out.println("calcing?");
+            for (int j = 0; i < buildings[0].length; j++) {
+                if (buildings[i] != null) {
+                    num++;
+                }
+            }
+        }
+        System.out.println(num);
+    }
 
     /**
      * Generates basic map obeject
      */
-    public static Map generateMap(int mapWidth,int mapLength,GameWindow window)
-    {
+    public static Map generateMap(int mapWidth,int mapLength,GameWindow window) {
         Map map = new Map(mapWidth,mapLength,window);
+        map.printBuildings();
         map.generateBasic();
         map.generateCornerspawn();
+        map.printBuildings();
         return map;
     }
 
@@ -61,8 +79,7 @@ public class Map {
     /**
      * Creates preset map
      */
-    public void presetMap()
-    {
+    public void presetMap() {
         //set all to null.
         for(int a=0; a<landscape.length;a++) {
             for(int b=0; b<landscape[0].length;b++) {
@@ -354,12 +371,14 @@ public class Map {
      * Draws the current state of the map into the graphics object.
      */
     public void drawImage(Graphics g, BufferedImage image) {
+        //System.out.println(Arrays.toString(buildings));
         for (int i = 0; i < width*scale; i++) {
             for (int j = 0; j < height*scale; j++) {
                 g.setColor(landscape[i][j].getColor());
                 if (buildings[i][j] != null) {
                     g.setColor(buildings[i][j].getColor());
                 }
+                //System.out.println(g.getColor());
                 g.fillRect(size*i, size*j, size, size);
             }
         }

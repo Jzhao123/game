@@ -15,7 +15,7 @@ public class Building {
      * Constructor for objects of class Building
      */
     public Building(ArrayList<Integer> xLocs, ArrayList<Integer> yLocs, int def, boolean high, Color c) {
-        walls = new int[xLocs.size()][2];
+        walls = new int[2][xLocs.size()];
         for (int i = 0; i < xLocs.size(); i++) {
             walls[0][i] = xLocs.get(i).intValue();
             walls[1][i] = yLocs.get(i).intValue();
