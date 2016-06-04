@@ -295,7 +295,17 @@ public class Map {
     private void autoMove(Unit u) {
         //help pls
     }
-
+    /**
+     * finds the next tile that unit U will move to
+     */
+    public void findNextTile(Unit u, int x , int y){
+        double angle = Math.atan2((double)u.getYPos() - y, (double)u.getXPos() - x);
+        int finalX = (int)(u.getXPos() + Math.round(Math.cos(angle)));
+        int finalY = (int)(u.getYPos() + Math.round(Math.sin(angle)));
+        u.setXPos(finalX);
+        u.setYPos(finalY);
+        units[finalX][finalY] = u;
+    }
     /**
      * Determines whether or not a unit is in range; if so, returns that unit.
      */
