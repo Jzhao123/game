@@ -54,6 +54,7 @@ public class GameWindow extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        map = Map.generateMap(width, height, this);
     }
     
     /**

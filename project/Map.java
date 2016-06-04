@@ -31,10 +31,10 @@ public class Map {
         gen = new Buildings();
     }
 
-    /*
+    /**
      * Generates basic map obeject
      */
-    public static Map generateMap(int mapWidth,int mapLength, Terrain landscape[][],Building buildings[][],GameWindow window)
+    public static Map generateMap(int mapWidth,int mapLength,GameWindow window)
     {
         Map map = new Map(mapWidth,mapLength,window);
         map.generateBasic();
@@ -58,41 +58,32 @@ public class Map {
         return u;
     }
 
-    /*
-     *Creates preset map
+    /**
+     * Creates preset map
      */
     public void presetMap()
     {
         //set all to null.
-        for(int a=0; a<landscape.length;a++)
-        {
-            for(int b=0; b<landscape[0].length;b++)
-            {
+        for(int a=0; a<landscape.length;a++) {
+            for(int b=0; b<landscape[0].length;b++) {
                 landscape[a][b]=null;
             }
         }
         //set water border
         int negCol = 0;
         int negRow = 0;
-        for(int twice=0; twice<2;twice++)
-        {
-            for(int r=0; r< landscape.length;r++)
-            {
-                if(negCol!=0 && r>landscape[0].length/2) // adds some more sporadic "natural" spawn patterns
-                {
+        for(int twice=0; twice<2;twice++) {
+            for(int r=0; r< landscape.length;r++) {
+                if(negCol!=0 && r>landscape[0].length/2){ // adds some more sporadic "natural" spawn patterns
                     landscape[r][negCol] = generator.getWater();
-                }
-                else
-                {
+                } else {
                     landscape[r][negCol] = generator.getMountain(); 
                 }
             }
             negCol = landscape[0].length-1;
         }
-        for(int twicenice=0; twicenice<2;twicenice++)
-        {
-            for(int col=0; col < landscape[0].length;col++)
-            {
+        for(int twicenice=0; twicenice<2;twicenice++) {
+            for(int col=0; col < landscape[0].length;col++) {
                 //if()
                 landscape[negRow][col] = generator.getWater();
             }
@@ -101,13 +92,10 @@ public class Map {
         //set river randomly
         int e=(int)(Math.random()*landscape.length-1)+1;
         int f=0;
-        for(int rivercount=0;rivercount<3;rivercount++)
-        {
-            while(e<landscape.length&&f<landscape[0].length)
-            {
+        for(int rivercount=0;rivercount<3;rivercount++) {
+            while(e<landscape.length&&f<landscape[0].length) {
                 f=e/(landscape.length/scale);
-                if(rivercount==2)
-                {
+                if(rivercount==2) {
                     f=landscape.length-f; // can someone pls check the logic of the river spawn.
                 }
                 landscape[e][f]=generator.getWater();
@@ -119,25 +107,21 @@ public class Map {
         int xDiv = landscape.length/2; 
         int xLine=1;
         int yLine=1;
-        while(xLine<landscape[0].length-1)
-        {
+        while(xLine<landscape[0].length-1) {
             landscape[xDiv][xLine]=generator.getRoad();
             xLine++;
         }
-        while(yLine<landscape.length-1)
-        {
+        while(yLine<landscape.length-1) {
             landscape[yLine][yDiv]=generator.getRoad();
             yLine++;
         }
         //set hospital terrain
         int numHosp= ((int)Math.random()*4);
         int hospCount=0;
-        while(hospCount<numHosp)
-        {
+        while(hospCount<numHosp) {
             int x=((int)Math.random()*landscape[0].length-1)+1;
             int y=((int)Math.random()*landscape.length-1)+1;
-            if(landscape[x][y]==null)
-            {
+            if(landscape[x][y]==null) {
                 landscape[x][y]=generator.getHospital();
                 hospCount++;
             }
@@ -147,28 +131,19 @@ public class Map {
         int mountCount=0; //:)
         int mountLimit=((int)Math.random()*6)+1;
         int directionM=0;
-        while(mountCount<mountLimit)
-        {
+        while(mountCount<mountLimit) {
             int x=((int)Math.random()*(landscape[0].length-1))+1;
             int y=((int)Math.random()*landscape.length-1)+1;
-            if(landscape[x][y]==null)
-            {
+            if(landscape[x][y]==null) {
                 chainLength=((int)Math.random()*3)+1;
                 directionM=((int)Math.random()*5)+1;
-                for(int chainCount=0;chainCount<chainLength;chainCount++)
-                {
-                    if(chainCount==0)
-                    {
+                for(int chainCount=0;chainCount<chainLength;chainCount++) {
+                    if(chainCount==0) {
                         landscape[x][y]=generator.getMountain();
-                    }
-                    else
-                    {
-                        if(directionM>2)
-                        {
+                    } else {
+                        if(directionM>2) {
                             landscape[x][y+(directionM%2)]= generator.getMountain();
-                        }
-                        else
-                        {
+                        } else {
                             landscape[x+(directionM)][y]=generator.getMountain();
                         }   
                     }
@@ -179,12 +154,10 @@ public class Map {
         //sets camps
         int numCamps= ((int)Math.random()*8)+1;
         int campsCount=0;
-        while(campsCount<numCamps)
-        {
+        while(campsCount<numCamps) {
             int x=((int)Math.random()*landscape[0].length-1)+1;
             int y=((int)Math.random()*landscape.length-1)+1;
-            if(landscape[x][y]==null)
-            {
+            if(landscape[x][y]==null) {
                 buildings[x][y]=gen.getCamp(1,1,x,y);
                 campsCount++;
             }
@@ -192,46 +165,42 @@ public class Map {
         //sets Castle
         int numCast= ((int)Math.random()*5)+1;
         int castCount=0;
-        while(castCount<numCast)
-        {
+        while(castCount<numCast) {
             int x=(int)(Math.random()*landscape[0].length-1)+1;
             int y=(int)(Math.random()*landscape.length-1)+1;
-            if(landscape[x][y]==null)
-            {
+            if(landscape[x][y]==null) {
                 buildings[x][y]=gen.getCastle(1,1,x,y);
                 castCount++;
             }
         }
         //sets remaining null blocks to fields
-        for(int a=0; a<landscape.length;a++)
-        {
-            for(int b=0; b<landscape[0].length;b++)
-            {
-                if(landscape[a][b] == null)
-                {
+        for(int a=0; a<landscape.length;a++) {
+            for(int b=0; b<landscape[0].length;b++) {
+                if(landscape[a][b] == null) {
                     landscape[a][b] = generator.getField();
                 }
             }
         }
     }
-    //generates basic all-field map
-    public Terrain[][] generateBasic()
-    {
-        for(int a=0; a<landscape.length;a++)
-        {
-            for(int b=0; b<landscape[0].length;b++)
-            {
-                if(landscape[a][b] == null)
-                {
+    
+    /**
+     * generates basic all-field map
+     */
+    public Terrain[][] generateBasic() {
+        for(int a=0; a<landscape.length;a++) {
+            for(int b=0; b<landscape[0].length;b++) {
+                if(landscape[a][b] == null) {
                     landscape[a][b] = generator.getField();
                 }
             }
         }
         return landscape;
     }
-
-    public Building[][] generateCornerspawn()
-    {
+    
+    /**
+     * Adds camps to the corners.
+     */
+    public Building[][] generateCornerspawn() {
         buildings[0][0]=gen.getCamp(4,4,0,0);
         buildings[buildings.length-1][buildings[0].length-1]=gen.getCamp(4,4,buildings[0].length-1,buildings.length);
         return buildings;
@@ -299,20 +268,15 @@ public class Map {
      * Moves a unit at (ox, oy) towards a destination at (nx, ny)
      */
     private void moveUnit(int ox, int oy, int nx, int ny) {
-        if(units[ox][oy] != null)
-        {
-            if((Math.abs(ox-nx) + Math.abs(oy-ny))>units[ox][oy].getStamina())
-            {
+        if(units[ox][oy] != null) {
+            if((Math.abs(ox-nx) + Math.abs(oy-ny))>units[ox][oy].getStamina()) {
                 System.out.print("Unable to move forward.");
-            }
-            else
-            {
+            } else {
                 units[ox][oy].updateStam(Math.abs(ox-nx) + Math.abs(oy-ny));
                 units[nx][ny] = units[ox][oy];
                 units[ox][oy] = null;
             }
-        }
-        else {
+        } else {
             System.out.print("There is no unit in that location.");
         }
     }
@@ -378,12 +342,10 @@ public class Map {
      */
     private void combat(Unit attacker, Unit defender) {
         //Sometime in the future this needs to take buildings into account as well
-        if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef())))))
-        {
+        if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef()))))) {
             units[defender.getXPos()][defender.getYPos()] = null;
         }
-        if(!(attacker.hit((defender.getDefense() * 50) * (1-(attacker.getDefense() * (1/3))))))
-        {
+        if(!(attacker.hit((defender.getDefense() * 50) * (1-(attacker.getDefense() * (1/3)))))) {
             units[attacker.getXPos()][attacker.getYPos()] = null;
         }
     }
