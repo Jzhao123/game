@@ -75,10 +75,8 @@ public class Map {
         }
         return u;
     }
-
-    /**
-     * Creates preset map
-     */
+    
+    /*
     public void presetMap() {
         //set all to null.
         for(int a=0; a<landscape.length;a++) {
@@ -199,6 +197,7 @@ public class Map {
             }
         }
     }
+    */
     
     /**
      * generates basic all-field map
