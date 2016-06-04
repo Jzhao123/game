@@ -293,8 +293,9 @@ public class Map {
      */
     //just account for units, buildings
     private void autoMove(Unit u) {
-        //help pls
+        findNextTile(u, u.getTargetX(), u.getTargetY());
     }
+    
     /**
      * finds the next tile that unit U will move to
      */
@@ -306,6 +307,7 @@ public class Map {
         u.setYPos(finalY);
         units[finalX][finalY] = u;
     }
+    
     /**
      * Determines whether or not a unit is in range; if so, returns that unit.
      */
@@ -320,50 +322,31 @@ public class Map {
         Unit northeast = units[u.getXPos() + 1][u.getYPos() - 1];
         Unit southwest = units[u.getXPos() - 1][u.getYPos() + 1];
         Unit southeast = units[u.getXPos() + 1][u.getYPos() + 1];
-        if(south != null)
-        {
+        if(south != null) {
             return south;
-        }
-        //do for the rest
-        if(north != null)
-        {
+        } else if(north != null) {
             return north;
-        }
-        if(west != null)
-        {
+        } else if(west != null) {
             return west;
-        }
-        if(east != null)
-        {
+        } else if(east != null) {
             return east;
-        }
-        if(northwest != null)
-        {
+        } else if(northwest != null) {
             return northwest;
-        }
-        if(northeast != null)
-        {
+        } else if(northeast != null) {
             return northeast;
-        }
-        if(southwest != null)
-        {
+        } else if(southwest != null) {
             return southwest;
-        }
-        if(southeast != null)
-        {
+        } else if(southeast != null) {
             return southeast;
+        } else {
+            return null;
         }
-
-        // should work, check this when you do the checking andy
-
-        return null;
     }
 
     /**
      * Simulates combat between two units.
      */
     private void combat(Unit attacker, Unit defender) {
-
         //Sometime in the future this needs to take buildings into account as well
         if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef())))))
         {

@@ -12,7 +12,7 @@ public class Unit {
     private int maxStam, curStam;
     private Color color;
     private Player player;
-    private Unit target;
+    private int tX, tY;
     private Map map;
 
     /**
@@ -120,17 +120,25 @@ public class Unit {
     }
     
     /**
-     * Returns the current target of the unit
+     * Returns the current x-position of the target of the unit
      */
-    public Unit getTarget() {
-        return target;
+    public int getTargetX() {
+        return tX;
+    }
+    
+    /**
+     * Returns the current y-position of the target of the unit
+     */
+    public int getTargetY() {
+        return tY;
     }
     
     /**
      * Sets a new target for the unit
      */
-    public void setTarget(Unit u) {
-        target = u;
+    public void setTarget(int x, int y) {
+        tX = x;
+        tY = y;
     }
     
     /**

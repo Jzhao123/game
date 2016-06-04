@@ -31,7 +31,7 @@ public class Input implements MouseListener {
         } else if (e.getButton() == e.BUTTON2) {
             Unit u2 = map.getHumanPlayer().getSelected();
             if (u != null) {
-                u2.setTarget(u);
+                u2.setTarget(u.getXPos(), u.getYPos());
             }
         }
     }
