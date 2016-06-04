@@ -206,7 +206,20 @@ public class Map {
             }
         }
     }
-
+    //generates basic all-field map
+    public void generateBasic()
+    {
+        for(int a=0; a<landscape.length;a++)
+        {
+            for(int b=0; b<landscape[0].length;b++)
+            {
+                if(landscape[a][b] == null)
+                {
+                    landscape[a][b] = generator.getField();
+                }
+            }
+        }
+    }
     /**
      * Returns if the selected square is in the spawn zone.
      */
