@@ -1,10 +1,10 @@
 #BlueJ class context
 comment0.params=c\ gameMap
 comment0.target=Input(java.awt.Component,\ Map)
-comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Input\n
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Input\r\n
 comment1.params=e
 comment1.target=void\ mouseClicked(java.awt.event.MouseEvent)
-comment1.text=\n\ Registers\ when\ the\ mouse\ is\ clicked.\n
+comment1.text=\r\n\ Registers\ when\ the\ mouse\ is\ clicked.\r\n
 comment2.params=e
 comment2.target=void\ mouseEntered(java.awt.event.MouseEvent)
 comment3.params=e

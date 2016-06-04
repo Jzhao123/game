@@ -1,20 +1,20 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Player()
-comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Player\n
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Player\r\n
 comment1.params=u
 comment1.target=void\ setSelected(Unit)
-comment1.text=\n\ Tells\ a\ unit\ to\ be\ selected.\n
+comment1.text=\r\n\ Tells\ a\ unit\ to\ be\ selected.\r\n
 comment2.params=
 comment2.target=Unit\ getSelected()
-comment2.text=\n\ Returns\ the\ selected\ unit.\n
+comment2.text=\r\n\ Returns\ the\ selected\ unit.\r\n
 comment3.params=
 comment3.target=void\ incrementBar()
-comment3.text=\n\ Increments\ the\ unit\ spawn\ bar\ (updates)\n
+comment3.text=\r\n\ Increments\ the\ unit\ spawn\ bar\ (updates)\r\n
 comment4.params=
 comment4.target=int\ getBar()
-comment4.text=\n\ Returns\ the\ charge\ level\ of\ the\ unit\ spawn\ bar.\n
+comment4.text=\r\n\ Returns\ the\ charge\ level\ of\ the\ unit\ spawn\ bar.\r\n
 comment5.params=
 comment5.target=void\ spawnUnit()
-comment5.text=\n\ Decrements\ the\ unit\ spawn\ bar\ (unit\ spawned)\n
+comment5.text=\r\n\ Decrements\ the\ unit\ spawn\ bar\ (unit\ spawned)\r\n
 numComments=6

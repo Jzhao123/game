@@ -31,6 +31,17 @@ public class Map {
         gen = new Buildings();
     }
 
+    /*
+     * Generates basic map obeject
+     */
+    public static Map generateMap(int mapWidth,int mapLength, Terrain landscape[][],Building buildings[][],GameWindow window)
+    {
+        Map map = new Map(mapWidth,mapLength,window);
+        map.generateBasic();
+        map.generateCornerspawn();
+        return map;
+    }
+
     /**
      * Gets the unit at the said location *on the window*.
      */
@@ -165,36 +176,33 @@ public class Map {
                 mountCount++;
             }
         }
-        /*
         //sets camps
         int numCamps= ((int)Math.random()*8)+1;
         int campsCount=0;
         while(campsCount<numCamps)
         {
-        int x=((int)Math.random()*landscape[0].length-1)+1;
-        int y=((int)Math.random()*landscape.length-1)+1;
-        if(landscape[x][y]==null)
-        {
-        landscape[x][y]=gen.getCamp(1,1,x,y);
-        campsCount++;
-        }
+            int x=((int)Math.random()*landscape[0].length-1)+1;
+            int y=((int)Math.random()*landscape.length-1)+1;
+            if(landscape[x][y]==null)
+            {
+                buildings[x][y]=gen.getCamp(1,1,x,y);
+                campsCount++;
+            }
         }
         //sets Castle
-        int numCast= (Math.random*5)+1;
+        int numCast= ((int)Math.random()*5)+1;
         int castCount=0;
         while(castCount<numCast)
         {
-        int x=Math.random()*(landscape[0].length()-1)+1;
-        int y=Math.random()*(landscape.length()-1)+1;
-        if(landscape[x][y]==null)
-        {
-        landscape[x][y]=gen.getCastle(1,1,x,y);
-        castCount++;
+            int x=(int)(Math.random()*landscape[0].length-1)+1;
+            int y=(int)(Math.random()*landscape.length-1)+1;
+            if(landscape[x][y]==null)
+            {
+                buildings[x][y]=gen.getCastle(1,1,x,y);
+                castCount++;
+            }
         }
-        }
-        //Set this aside cause I need to figure out a way to implement the building onto a map.
-         */
-        //setsfield for remaining portions
+        //sets remaining null blocks to fields
         for(int a=0; a<landscape.length;a++)
         {
             for(int b=0; b<landscape[0].length;b++)
@@ -221,12 +229,14 @@ public class Map {
         }
         return landscape;
     }
+
     public Building[][] generateCornerspawn()
     {
         buildings[0][0]=gen.getCamp(4,4,0,0);
         buildings[buildings.length-1][buildings[0].length-1]=gen.getCamp(4,4,buildings[0].length-1,buildings.length);
         return buildings;
     }
+
     /**
      * Returns if the selected square is in the spawn zone.
      */
@@ -315,7 +325,7 @@ public class Map {
     private void autoMove(Unit u) {
         findNextTile(u, u.getTargetX(), u.getTargetY());
     }
-    
+
     /**
      * finds the next tile that unit U will move to
      */
@@ -327,7 +337,7 @@ public class Map {
         u.setYPos(finalY);
         units[finalX][finalY] = u;
     }
-    
+
     /**
      * Determines whether or not a unit is in range; if so, returns that unit.
      */

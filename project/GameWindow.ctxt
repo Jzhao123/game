@@ -1,17 +1,17 @@
 #BlueJ class context
 comment0.params=
 comment0.target=GameWindow()
-comment0.text=\n\ Constructs\ a\ new\ game\ window.\n
+comment0.text=\r\n\ Constructs\ a\ new\ game\ window.\r\n
 comment1.params=
 comment1.target=void\ run()
-comment1.text=\n\ Runs\ the\ game\n
+comment1.text=\r\n\ Runs\ the\ game\r\n
 comment2.params=
 comment2.target=void\ init()
-comment2.text=\n\ Initializes\ game\ circumstances\n
+comment2.text=\r\n\ Initializes\ game\ circumstances\r\n
 comment3.params=
 comment3.target=void\ update()
-comment3.text=\n\ Updates\ every\ frame\n
+comment3.text=\r\n\ Updates\ every\ frame\r\n
 comment4.params=
 comment4.target=void\ draw()
-comment4.text=\n\ Draws\ things\n
+comment4.text=\r\n\ Draws\ things\r\n
 numComments=5
