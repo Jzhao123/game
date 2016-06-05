@@ -7,14 +7,27 @@ import java.awt.event.*;
  * Creates the game window.
  */
 public class GameWindow extends JFrame{
-    private final int width = 900;
-    private final int height = 600;
+    private final int width = 600;
+    private final int height = 400;
     private Map map;
     private boolean running;
-    private final int fps = 15;
+    private final int fps = 1;
     
     private BufferedImage buffer;
     private Insets insets;
+    private Input input;
+    
+    /**
+     * Runs the game.
+     */
+    public static void main(String[] args) {
+        GameWindow window = new GameWindow();
+        System.out.println("\n\n\n");
+        window.init();
+        System.out.println("initialized");
+        window.run();
+        System.exit(0);
+    }
     
     /**
      * Constructs a new game window.
@@ -28,17 +41,14 @@ public class GameWindow extends JFrame{
      */
     public void run() {
         init();
-        System.out.println("\n\n\ninitialized\n\n\n");
         while (running) {
             long time = System.currentTimeMillis();
             update();
             draw();
             time = (1000/fps) - (System.currentTimeMillis() - time);
-            System.out.println(time);
             if (time > 0) {
                 try {
                     Thread.sleep(time);
-                    System.out.println("finished sleeping");
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -58,8 +68,11 @@ public class GameWindow extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        System.out.println("initialized window");
         map = Map.generateMap(width, height, this);
+        System.out.println("initialized map");
         running = true;
+        input = new Input(this, map);
     }
     
     /**
@@ -76,6 +89,6 @@ public class GameWindow extends JFrame{
         Graphics g = getGraphics();
         Graphics bbg = buffer.getGraphics();
         map.drawImage(bbg, buffer);
-        g.drawImage(buffer, 0, 0, this);
+        g.drawImage(buffer, insets.left, insets.top, this);
     }
 }

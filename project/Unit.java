@@ -9,7 +9,7 @@ public class Unit {
     private double atk, def;
     private double exp;
     private int xPos, yPos;
-    private int maxStam, curStam;
+    private boolean moved;
     private Color color;
     private Player player;
     private int tX, tY;
@@ -23,7 +23,6 @@ public class Unit {
         atk = attack;//Stock Attack is 50, increases as exp goes up
         def = 0;//Precondition: Defense must be between 0 and 1
         exp = 0;
-        curStam = maxStam = stamina;
         color = c;
     }
     
@@ -113,10 +112,10 @@ public class Unit {
     }
     
     /**
-     * Returns the remaining stamina of the object.
+     * Returns the move status.
      */
-    public int getStamina() {
-        return curStam;
+    public boolean hasMoved() {
+        return moved;
     }
     
     /**
@@ -142,11 +141,10 @@ public class Unit {
     }
     
     /**
-     * Updates the stamina of the object. Returns true if the object still has stamina.
+     * Resets the unit's move status.
      */
-    public boolean updateStam(int usedStam) {
-           curStam = curStam - usedStam;
-           return (curStam > 0);
+    public void updateStam(boolean x) {
+        moved = x;
     }
     
 }

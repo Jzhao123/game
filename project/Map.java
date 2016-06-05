@@ -6,16 +6,14 @@ import java.util.*;
  * Represents a map.
  */
 public class Map {
-    private Terrain[][] landscape;
-    private Terrains generator;
+    //private Terrain[][] landscape;
+    
     private Building[][] buildings;
     private Unit[][] units; //map array, use to find adjacent squares
-    private Player[] players;
+    private Player player, computer;
     private int width, height;
-    private final static int scale = 3;
-    private final static int size = 2;
+    private final static int scale = 10;
     private GameWindow window;
-    private Buildings gen;
 
     /**
      * Constructor for objects of class Map
@@ -23,13 +21,12 @@ public class Map {
     public Map(int mapWidth, int mapHeight, GameWindow gameWindow) {
         width = mapWidth;
         height = mapHeight;
-        landscape = new Terrain[width*scale][height*scale];
-        buildings = new Building[width*scale][height*scale];
-        units = new Unit[width*scale][height*scale];
-        players = new Player[2];
+        //landscape = new Terrain[width][height];
+        buildings = new Building[width][height];
+        units = new Unit[width][height];
+        player = new Player();
+        computer = new Player();
         window = gameWindow;
-        generator = new Terrains();
-        gen = new Buildings();
     }
     
     /**
@@ -37,10 +34,11 @@ public class Map {
      */
     public void printBuildings() {
         int num = 0;
+        System.out.println(buildings.length);
+        System.out.println(buildings[0].length);
         for (int i = 0; i < buildings.length; i++) {
-            System.out.println("calcing?");
-            for (int j = 0; i < buildings[0].length; j++) {
-                if (buildings[i] != null) {
+            for (int j = 0; j < buildings[0].length; j++) {
+                if (buildings[i][j] != null) {
                     num++;
                 }
             }
@@ -51,11 +49,14 @@ public class Map {
     /**
      * Generates basic map obeject
      */
-    public static Map generateMap(int mapWidth,int mapLength,GameWindow window) {
-        Map map = new Map(mapWidth,mapLength,window);
-        map.printBuildings();
-        map.generateBasic();
-        map.generateCornerspawn();
+    public static Map generateMap(int mapWidth, int mapLength, GameWindow window) {
+        Map map = new Map(mapWidth/scale, mapLength/scale, window);
+        System.out.println("created map");
+        //map.generateBasic();
+        map.addBuilding(Buildings.getCamp(2, 2, 2, 2));
+        System.out.println("done with first camp");
+        map.addBuilding(Buildings.getCamp(mapWidth/scale - 4, mapLength/scale - 4, 2, 2));
+        System.out.println("added buildings");
         map.printBuildings();
         return map;
     }
@@ -64,19 +65,196 @@ public class Map {
      * Gets the unit at the said location *on the window*.
      */
     public Unit getUnit(int w, int h) {
-        Unit u = null;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                u = units[w/scale + i][w/scale + j];
-                if (u != null) {
-                    return u;
+        return units[w/scale][h/scale];
+    }
+    
+    /**
+     * Returns if the selected square is in the spawn zone.
+     */
+    public boolean canSpawn(int w, int h) {
+        return (units[w/scale][h/scale] == null && buildings[w/scale][h/scale] == null);
+    }
+
+    /**
+     * Returns the actual player of the game (not the computer).
+     */
+    public Player getHumanPlayer() {
+        return player;
+    }
+
+    /**
+     * Returns the computer player of the game.
+     */
+    public Player getCompPlayer() {
+        return computer;
+    }
+
+    /**
+     * Adds a unit to the map.
+     */
+    public void addUnit(int xPos, int yPos) {
+        Unit u = Units.getLegionnaire();
+        u.setPlayer(player);
+        u.setXPos(xPos/scale);
+        u.setYPos(yPos/scale);
+        u.setTarget(computer.getCamp().getXPos(), computer.getCamp().getYPos());
+        System.out.println(u.getTargetX() + " " + u.getTargetY());
+        units[xPos/(scale)][yPos/(scale)] = u;
+        player.spawnUnit();
+    }
+
+    /**
+     * Adds a building to the map.
+     */
+    public void addBuilding(Building b) {
+        int x = b.getXPos();
+        int y = b.getYPos();
+        int xlen = b.getXLen();
+        int ylen = b.getYLen();
+        System.out.println(x + " " + y + " " + xlen + " " + ylen + " ");
+        for (int i = x; i < x + xlen; i++) {
+            for (int j = y; j < y + ylen; j++) {
+                buildings[i][j] = b;
+                System.out.println("ta");
+            }
+        }
+        if (player.getCamp() == null) {
+            player.setCamp(b);
+        } else if (computer.getCamp() == null) {
+            computer.setCamp(b);
+        }
+    }
+
+    /**
+     * Automoves a single unit on the map (does not initiate conflict). 
+     */
+    private void autoMove(Unit u) {
+        System.out.println("Moving a unit");
+        int x = u.getTargetX();
+        int y = u.getTargetY();
+        int finalX = u.getXPos();
+        int finalY = u.getYPos();
+        System.out.println(x + " " + y + " " + finalX + " " + finalY);
+        if (x > finalX) {
+            finalX++;
+        } else if (x < finalX) {
+            finalX--;
+        }
+        if (y > finalY) {
+            finalY++;
+        } else if (y < finalY) {
+            finalY--;
+        }
+        if (canSpawn(finalX*scale, finalY*scale)) {
+            units[u.getXPos()][u.getYPos()] = null;
+            u.setXPos(finalX);
+            u.setYPos(finalY);
+            units[finalX][finalY] = u;
+        }
+    }
+
+    /**
+     * Determines whether or not a unit is in range; if so, returns that unit.
+     */
+    private Unit getUnitInRange(Unit u) {
+        System.out.println(u.getXPos());
+        System.out.println(u.getYPos());
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                i = Math.abs(i % width);
+                j = Math.abs(j % height);
+                if (i != 0 || j != 0) {
+                    Unit u2 = units[u.getXPos() + i][u.getYPos() + j];
+                    if (u2 != null) {
+                        return u;
+                    }
                 }
             }
         }
-        return u;
+        return null;
+    }
+
+    /**
+     * Simulates combat between two units.
+     */
+    private void combat(Unit attacker, Unit defender) {
+        //Sometime in the future this needs to take buildings into account as well
+        if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) ))))) {
+            units[defender.getXPos()][defender.getYPos()] = null;
+        }
+        if(!(attacker.hit((defender.getDefense() * 50) * (1-(attacker.getDefense() * (1/3)))))) {
+            units[attacker.getXPos()][attacker.getYPos()] = null;
+        }
+    }
+
+    /**
+     * Draws the current state of the map into the graphics object.
+     */
+    public void drawImage(Graphics g, BufferedImage image) {
+        //System.out.println(Arrays.toString(buildings));
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                //g.setColor(landscape[i][j].getColor());
+                if (buildings[i][j] != null) {
+                    g.setColor(buildings[i][j].getColor());
+                } else {
+                    g.setColor(Color.white);
+                }
+                //System.out.println(g.getColor());
+                g.fillRect(scale*i, scale*j, scale, scale);
+            }
+        }
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (units[i][j] != null) {
+                    g.setColor(units[i][j].getColor());
+                    g.fillOval(i*scale, j*scale, scale, scale);
+                } else {
+                    g.setColor(Color.white);
+                }
+            }
+        }
+    }
+
+    /**
+     * Updates the current conditions of the game map. 
+     */
+    public void updateConditions() {
+        //sometime in the future this needs to take buildings into account as well
+        for (int i = 0; i < units.length; i++) {
+            for (int j = 0; j < units[0].length; j++) {
+                if (units[i][j] != null && !units[i][j].hasMoved()) {
+                    units[i][j].updateStam(true);
+                    autoMove(units[i][j]);
+                }
+            }
+        }
+        for (int i = 0; i < units.length; i++) {
+            for (int j = 0; j < units[0].length; j++) {
+                if (units[i][j] != null) {
+                    units[i][j].updateStam(false);
+                }
+            }
+        }
+        boolean[][] fought = new boolean[units.length][units[0].length];
+        Unit u, other;
+        for (int i = 0; i < units.length; i++) {
+            for (int j = 0; j < units[0].length; j++) {
+                if (!fought[i][j]) {
+                    u = units[i][j];
+                    if (u != null) {
+                        other = getUnitInRange(u);
+                        if (other != null) {
+                            combat(u, other);
+                            fought[other.getXPos()][other.getYPos()] = true;
+                        }
+                    }
+                }
+            }
+        }
     }
     
-    /*
+        /*
     public void presetMap() {
         //set all to null.
         for(int a=0; a<landscape.length;a++) {
@@ -199,90 +377,20 @@ public class Map {
     }
     */
     
-    /**
-     * generates basic all-field map
-     */
+    /*
     public Terrain[][] generateBasic() {
         for(int a=0; a<landscape.length;a++) {
             for(int b=0; b<landscape[0].length;b++) {
                 if(landscape[a][b] == null) {
-                    landscape[a][b] = generator.getField();
+                    landscape[a][b] = Terrains.getField();
                 }
             }
         }
         return landscape;
     }
-    
-    /**
-     * Adds camps to the corners.
-     */
-    public Building[][] generateCornerspawn() {
-        buildings[0][0]=gen.getCamp(4,4,0,0);
-        buildings[buildings.length-1][buildings[0].length-1]=gen.getCamp(4,4,buildings[0].length-1,buildings.length);
-        return buildings;
-    }
-
-    /**
-     * Returns if the selected square is in the spawn zone.
-     */
-    public boolean canSpawn(int w, int h) {
-        Unit u = null;
-        for (int i = -(size/2); i < (size/2); i++) {
-            for (int j = -(size/2); j < (size/2); j++) {
-                u = units[w/scale + i][w/scale + j];
-                if (u != null) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Returns the actual player of the game (not the computer).
-     */
-    public Player getHumanPlayer() {
-        return players[0];
-    }
-
-    /**
-     * Returns the computer player of the game.
-     */
-    public Player getCompPlayer() {
-        return players[1];
-    }
-
-    /**
-     * Adds a unit to the map.
-     */
-    public void addUnit(int xPos, int yPos) {
-        Unit u = Units.getLegionnaire();
-        u.setPlayer(players[0]);
-        units[xPos/(size*scale)][yPos/(size*scale)] = u;
-        players[0].spawnUnit();
-    }
-
-    /**
-     * Adds a terrain landscape to the map.
-     */
-    public void addTerrains(Terrain[][] terrains) {
-        landscape = terrains;
-    }
-
-    /**
-     * Adds a building to the map.
-     */
-    public void addBuilding(Building b) {
-        int[] xlocs = b.getXLocs();
-        int[] ylocs = b.getYLocs();
-        for (int i = 0; i < xlocs.length; i++) {
-            buildings[xlocs[i]][ylocs[i]] = b;
-        }
-    }
-
-    /**
-     * Moves a unit at (ox, oy) towards a destination at (nx, ny)
-     */
+    */
+   
+    /*
     private void moveUnit(int ox, int oy, int nx, int ny) {
         if(units[ox][oy] != null) {
             if((Math.abs(ox-nx) + Math.abs(oy-ny))>units[ox][oy].getStamina()) {
@@ -296,139 +404,12 @@ public class Map {
             System.out.print("There is no unit in that location.");
         }
     }
-
-    /**
-     * Automoves a single unit on the map (does not initiate conflict).
-     * [Must account for other units, terrain, buildings, etc. -- not an easy method] 
-     * lol guess it is
-     */
-    //just account for units, buildings
-    private void autoMove(Unit u) {
-        findNextTile(u, u.getTargetX(), u.getTargetY());
+    */
+   
+    /*
+    public void addTerrains(Terrain[][] terrains) {
+        landscape = terrains;
     }
-
-    /**
-     * finds the next tile that unit U will move to
-     */
-    public void findNextTile(Unit u, int x , int y){
-        double angle = Math.atan2((double)u.getYPos() - y, (double)u.getXPos() - x);
-        int finalX = (int)(u.getXPos() + Math.round(Math.cos(angle)));
-        int finalY = (int)(u.getYPos() + Math.round(Math.sin(angle)));
-        u.setXPos(finalX);
-        u.setYPos(finalY);
-        units[finalX][finalY] = u;
-    }
-
-    /**
-     * Determines whether or not a unit is in range; if so, returns that unit.
-     */
-    private Unit getUnitInRange(Unit u) { //assume unit 1 until that method is created
-        //too tired for this
-        //look at units array at top
-        //note to self(Kavin) - remember return exits method automatically
-        Unit south = units[u.getXPos()][u.getYPos()+1];
-        
-        Unit north = units[u.getXPos()][u.getYPos()-1];
-        
-        Unit west = units[u.getXPos() - 1][u.getYPos()];
-        
-        Unit east = units[u.getXPos() + 1][u.getYPos()];
-        
-        Unit northwest = units[u.getXPos() - 1][u.getYPos() - 1];
-        
-        Unit northeast = units[u.getXPos() + 1][u.getYPos() - 1];
-        
-        Unit southwest = units[u.getXPos() - 1][u.getYPos() + 1];
-        
-        Unit southeast = units[u.getXPos() + 1][u.getYPos() + 1];
-        
-        if(south != null) {
-            return south;
-        } else if(north != null) {
-            return north;
-        } else if(west != null) {
-            return west;
-        } else if(east != null) {
-            return east;
-        } else if(northwest != null) {
-            return northwest;
-        } else if(northeast != null) {
-            return northeast;
-        } else if(southwest != null) {
-            return southwest;
-        } else if(southeast != null) {
-            return southeast;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Simulates combat between two units.
-     */
-    private void combat(Unit attacker, Unit defender) {
-        //Sometime in the future this needs to take buildings into account as well
-        if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) * landscape[defender.getXPos()][defender.getYPos()].getXdef()))))) {
-            units[defender.getXPos()][defender.getYPos()] = null;
-        }
-        if(!(attacker.hit((defender.getDefense() * 50) * (1-(attacker.getDefense() * (1/3)))))) {
-            units[attacker.getXPos()][attacker.getYPos()] = null;
-        }
-    }
-
-    /**
-     * Draws the current state of the map into the graphics object.
-     */
-    public void drawImage(Graphics g, BufferedImage image) {
-        //System.out.println(Arrays.toString(buildings));
-        for (int i = 0; i < width*scale; i++) {
-            for (int j = 0; j < height*scale; j++) {
-                g.setColor(landscape[i][j].getColor());
-                if (buildings[i][j] != null) {
-                    g.setColor(buildings[i][j].getColor());
-                }
-                //System.out.println(g.getColor());
-                g.fillRect(size*i, size*j, size, size);
-            }
-        }
-        for (int i = 0; i < width*scale; i++) {
-            for (int j = 0; j < height*scale; j++) {
-                if (units[i][j] != null) {
-                    g.setColor(units[i][j].getColor());
-                    g.fillOval(size*scale*(i-scale/2), size*scale*(j-scale/2), size*scale, size*scale);
-                }
-            }
-        }
-    }
-
-    /**
-     * Updates the current conditions of the game map. 
-     */
-    public void updateConditions() {
-        //sometime in the future this needs to take buildings into account as well
-        for (int i = 0; i < units.length; i++) {
-            for (int j = 0; j < units[0].length; j++) {
-                if (units[i][j] != null) {
-                    autoMove(units[i][j]);
-                }
-            }
-        }
-        boolean[][] fought = new boolean[units.length][units[0].length];
-        Unit u, other;
-        for (int i = 0; i < units.length; i++) {
-            for (int j = 0; j < units[0].length; j++) {
-                if (!fought[i][j]) {
-                    u = units[i][j];
-                    if (u != null) {
-                        other = getUnitInRange(u);
-                        if (other != null) {
-                            combat(u, other);
-                            fought[other.getXPos()][other.getYPos()] = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    */
 
 }

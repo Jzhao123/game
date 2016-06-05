@@ -5,6 +5,7 @@
 public class Player {
     private int bar, morale;
     private Unit selected;
+    private Building camp;
 
     /**
      * Constructor for objects of class Player
@@ -20,6 +21,20 @@ public class Player {
      */
     public void setSelected(Unit u) {
         selected = u;
+    }
+    
+    /**
+     * Adds a camp.
+     */
+    public void setCamp(Building acamp) {
+        camp = acamp;
+    }
+    
+    /**
+     * Returns the camp.
+     */
+    public Building getCamp() {
+        return camp;
     }
     
     /**

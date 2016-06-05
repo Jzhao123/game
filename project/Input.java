@@ -19,14 +19,22 @@ public class Input implements MouseListener {
      * Registers when the mouse is clicked.
      */
     public void mouseClicked(MouseEvent e) {
+        System.out.println("hey you clicked the mouse");
         int w = e.getX();
         int h = e.getY();
+        System.out.println(w + " " + h);
         Unit u = map.getUnit(w, h);
         if (e.getButton() == e.BUTTON1) {
+            System.out.println("hey you clicked the left button");
             if (u != null) {
+                System.out.println("selected");
                 map.getHumanPlayer().setSelected(u);
-            } else if (map.canSpawn(w, h)) {
-                map.addUnit(w, h);
+            } else {
+                System.out.println("lesse if map is good");
+                if (map.canSpawn(w, h)) {
+                    System.out.println("spawning");
+                    map.addUnit(w, h);
+                }
             }
         } else if (e.getButton() == e.BUTTON2) {
             Unit u2 = map.getHumanPlayer().getSelected();

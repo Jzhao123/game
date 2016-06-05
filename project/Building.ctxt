@@ -1,14 +1,20 @@
 #BlueJ class context
-comment0.params=xLocs\ yLocs\ def\ high\ c
-comment0.target=Building(java.util.ArrayList,\ java.util.ArrayList,\ int,\ boolean,\ java.awt.Color)
+comment0.params=xPos\ yPos\ xLen\ yLen\ c
+comment0.target=Building(int,\ int,\ int,\ int,\ java.awt.Color)
 comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Building\n
 comment1.params=
 comment1.target=java.awt.Color\ getColor()
 comment1.text=\n\ Returns\ the\ color\ of\ the\ building\n
 comment2.params=
-comment2.target=int[]\ getXLocs()
-comment2.text=\n\ Returns\ the\ wall\ x-locations.\n
+comment2.target=int\ getXPos()
+comment2.text=\n\ Returns\ the\ x-position.\n
 comment3.params=
-comment3.target=int[]\ getYLocs()
-comment3.text=\n\ Returns\ the\ wall\ y-locations.\n
-numComments=4
+comment3.target=int\ getYPos()
+comment3.text=\n\ Returns\ the\ y-position.\n
+comment4.params=
+comment4.target=int\ getXLen()
+comment4.text=\n\ Returns\ the\ width.\n
+comment5.params=
+comment5.target=int\ getYLen()
+comment5.text=\n\ Returns\ the\ other\ width.\n
+numComments=6

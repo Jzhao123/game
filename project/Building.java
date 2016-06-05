@@ -6,21 +6,20 @@ import java.awt.Color;
  * Represents a building as a series of individual wall tiles.
  */
 public class Building {
-    private int[][] walls;
-    private int def;
-    private boolean high;
+    private int x, y, xlen, ylen;
     private Color color;
 
     /**
      * Constructor for objects of class Building
      */
-    public Building(ArrayList<Integer> xLocs, ArrayList<Integer> yLocs, int def, boolean high, Color c) {
-        walls = new int[2][xLocs.size()];
-        for (int i = 0; i < xLocs.size(); i++) {
-            walls[0][i] = xLocs.get(i).intValue();
-            walls[1][i] = yLocs.get(i).intValue();
-        }
+    public Building(int xPos, int yPos, int xLen, int yLen, Color c) {
+        System.out.println("creating a building");
+        x = xPos;
+        y = yPos;
+        xlen = xLen;
+        ylen = yLen;
         color = c;
+        System.out.println("created a building");
     }
     
     /**
@@ -31,16 +30,30 @@ public class Building {
     }
     
     /**
-     * Returns the wall x-locations.
+     * Returns the x-position.
      */
-    public int[] getXLocs() {
-        return Arrays.copyOf(walls[0], walls[0].length);
+    public int getXPos() {
+        return x;
     }
     
     /**
-     * Returns the wall y-locations.
+     * Returns the y-position.
      */
-    public int[] getYLocs() {
-        return Arrays.copyOf(walls[1], walls[1].length);
+    public int getYPos() {
+        return y;
+    }
+    
+    /**
+     * Returns the width.
+     */
+    public int getXLen() {
+        return xlen;
+    }
+    
+    /**
+     * Returns the other width.
+     */
+    public int getYLen() {
+        return ylen;
     }
 }
