@@ -299,7 +299,8 @@ public class Map {
 
     /**
      * Automoves a single unit on the map (does not initiate conflict).
-     * [Must account for other units, terrain, buildings, etc. -- not an easy method]
+     * [Must account for other units, terrain, buildings, etc. -- not an easy method] 
+     * lol guess it is
      */
     //just account for units, buildings
     private void autoMove(Unit u) {
@@ -324,14 +325,23 @@ public class Map {
     private Unit getUnitInRange(Unit u) { //assume unit 1 until that method is created
         //too tired for this
         //look at units array at top
+        //note to self(Kavin) - remember return exits method automatically
         Unit south = units[u.getXPos()][u.getYPos()+1];
+        
         Unit north = units[u.getXPos()][u.getYPos()-1];
+        
         Unit west = units[u.getXPos() - 1][u.getYPos()];
+        
         Unit east = units[u.getXPos() + 1][u.getYPos()];
+        
         Unit northwest = units[u.getXPos() - 1][u.getYPos() - 1];
+        
         Unit northeast = units[u.getXPos() + 1][u.getYPos() - 1];
+        
         Unit southwest = units[u.getXPos() - 1][u.getYPos() + 1];
+        
         Unit southeast = units[u.getXPos() + 1][u.getYPos() + 1];
+        
         if(south != null) {
             return south;
         } else if(north != null) {
