@@ -64,8 +64,8 @@ public class Player {
      * Decrements the unit spawn bar (unit spawned)
      */
     public void spawnUnit() {
-        if (bar > 0) {
-            bar--;
+        if (bar > 4) {
+            bar -= 5;
         }
     }
 }

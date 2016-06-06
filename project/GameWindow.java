@@ -11,7 +11,7 @@ public class GameWindow extends JFrame{
     private final int height = 400;
     private Map map;
     private boolean running;
-    private final int fps = 1;
+    private final int fps = 2;
     
     private BufferedImage buffer;
     private Insets insets;
@@ -26,7 +26,7 @@ public class GameWindow extends JFrame{
         window.init();
         System.out.println("initialized");
         window.run();
-        System.exit(0);
+        //System.exit(0);
     }
     
     /**
@@ -36,6 +36,14 @@ public class GameWindow extends JFrame{
         map = new Map(width/6, height/6, this);
     }
     
+    /**
+     * Tells this whether victory conditions have been met.
+     */
+    public void won() {
+        running = false;
+        draw();
+    }
+   
     /**
      * Runs the game
      */
@@ -54,7 +62,7 @@ public class GameWindow extends JFrame{
                 }
             }
         }
-        setVisible(false);
+        //setVisible(false);
     }
     
     /**

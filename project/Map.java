@@ -12,8 +12,9 @@ public class Map {
     private Unit[][] units; //map array, use to find adjacent squares
     private Player player, computer;
     private int width, height;
-    private final static int scale = 10;
+    private final static int scale = 8;
     private GameWindow window;
+    private boolean won, who;
 
     /**
      * Constructor for objects of class Map
@@ -53,11 +54,14 @@ public class Map {
         Map map = new Map(mapWidth/scale, mapLength/scale, window);
         System.out.println("created map");
         //map.generateBasic();
-        map.addBuilding(Buildings.getCamp(2, 2, 2, 2));
+        map.addBuilding(Buildings.getCamp(2, 2, 3, 3));
         System.out.println("done with first camp");
-        map.addBuilding(Buildings.getCamp(mapWidth/scale - 4, mapLength/scale - 4, 2, 2));
+        map.addBuilding(Buildings.getCamp(mapWidth/scale - 5, mapLength/scale - 5, 3, 3));
         System.out.println("added buildings");
         map.printBuildings();
+        map.addCompUnit(mapWidth/scale - 8, mapLength/scale - 16);
+        map.addCompUnit(mapWidth/scale - 16, mapLength/scale - 8);
+        map.addCompUnit(mapWidth/scale - 12, mapLength/scale - 12);
         return map;
     }
 
@@ -93,14 +97,29 @@ public class Map {
      * Adds a unit to the map.
      */
     public void addUnit(int xPos, int yPos) {
-        Unit u = Units.getLegionnaire();
-        u.setPlayer(player);
-        u.setXPos(xPos/scale);
-        u.setYPos(yPos/scale);
-        u.setTarget(computer.getCamp().getXPos(), computer.getCamp().getYPos());
+        if (player.getBar() > 5) {
+            player.spawnUnit();
+            Unit u = Units.getLegionnaire();
+            u.setPlayer(player);
+            u.setXPos(xPos/scale);
+            u.setYPos(yPos/scale);
+            u.setTarget(computer.getCamp().getXPos(), computer.getCamp().getYPos());
+            System.out.println(u.getTargetX() + " " + u.getTargetY());
+            units[xPos/(scale)][yPos/(scale)] = u;
+        }
+    }
+    
+    /**
+     * Adds a computer-controlled unit to the map.
+     */
+    public void addCompUnit(int x, int y) {
+        Unit u = Units.getBarbarian();
+        u.setPlayer(computer);
+        u.setXPos(x);
+        u.setYPos(y);
+        u.setTarget(player.getCamp().getXPos(), player.getCamp().getYPos());
         System.out.println(u.getTargetX() + " " + u.getTargetY());
-        units[xPos/(scale)][yPos/(scale)] = u;
-        player.spawnUnit();
+        units[x][y] = u;
     }
 
     /**
@@ -145,11 +164,24 @@ public class Map {
         } else if (y < finalY) {
             finalY--;
         }
-        if (canSpawn(finalX*scale, finalY*scale)) {
+        if (units[finalX][finalY] == null) {
             units[u.getXPos()][u.getYPos()] = null;
             u.setXPos(finalX);
             u.setYPos(finalY);
             units[finalX][finalY] = u;
+            if (buildings[finalX][finalY] != null) {
+                if (u.getPlayer() == computer && buildings[finalX][finalY] == player.getCamp()) {
+                    window.won();
+                    won = true;
+                    who = false;
+                } else if (u.getPlayer() == player && buildings[finalX][finalY] == computer.getCamp()) {
+                    window.won();
+                    won = true;
+                    who = true;
+                }
+            }
+        } else {
+            combat(u, units[finalX][finalY]);
         }
     }
 
@@ -159,15 +191,20 @@ public class Map {
     private Unit getUnitInRange(Unit u) {
         System.out.println(u.getXPos());
         System.out.println(u.getYPos());
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                i = Math.abs(i % width);
-                j = Math.abs(j % height);
-                if (i != 0 || j != 0) {
-                    Unit u2 = units[u.getXPos() + i][u.getYPos() + j];
-                    if (u2 != null) {
-                        return u;
+        for (int i = -3; i <= 3; i++) {
+            for (int j = -3; j <= 3; j++) {
+                try {
+                    if (i != 0 || j != 0) {
+                        //System.out.println("testing testing " + i2 + " " + j2 + " " + width + " " + height);
+                        Unit u2 = units[u.getXPos() + i][u.getYPos() + j];
+                        //System.out.println("at least here?" + u2 == null);
+                        if (u2 != null) {
+                            System.out.println("found a unit in range woooooooohoooooo");
+                            return u2;
+                        }
                     }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -178,13 +215,8 @@ public class Map {
      * Simulates combat between two units.
      */
     private void combat(Unit attacker, Unit defender) {
-        //Sometime in the future this needs to take buildings into account as well
-        if(!(defender.hit(attacker.getAttack() * (1-(defender.getDefense() * (3/4) ))))) {
-            units[defender.getXPos()][defender.getYPos()] = null;
-        }
-        if(!(attacker.hit((defender.getDefense() * 50) * (1-(attacker.getDefense() * (1/3)))))) {
-            units[attacker.getXPos()][attacker.getYPos()] = null;
-        }
+        units[defender.getXPos()][defender.getYPos()] = null;
+        units[attacker.getXPos()][attacker.getYPos()] = null;
     }
 
     /**
@@ -214,16 +246,46 @@ public class Map {
                 }
             }
         }
+        if (won) {
+            g.setColor(Color.black);
+            if (who) {
+                System.out.println("called");
+                g.drawString("You've Won!", width*scale/2 - 40, height*scale/2 - 2);
+            } else {
+                g.drawString("You've lost.", width*scale/2 - 40, height*scale/2 - 2);
+            }
+        }
     }
 
     /**
      * Updates the current conditions of the game map. 
      */
     public void updateConditions() {
+        player.incrementBar();
         //sometime in the future this needs to take buildings into account as well
+        boolean[][] fought = new boolean[units.length][units[0].length];
+        Unit u = null;
+        Unit other = null;
         for (int i = 0; i < units.length; i++) {
             for (int j = 0; j < units[0].length; j++) {
-                if (units[i][j] != null && !units[i][j].hasMoved()) {
+                if (!fought[i][j]) {
+                    u = units[i][j];
+                    if (u != null) {
+                        System.out.println("finding units in range");
+                        other = getUnitInRange(u);
+                        if (other != null) {
+                            System.out.println("fighting");
+                            combat(u, other);
+                            //fought[u.getXPos()][u.getYPos()] = true;
+                            //fought[other.getXPos()][other.getYPos()] = true;
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < units.length; i++) {
+            for (int j = 0; j < units[0].length; j++) {
+                if (units[i][j] != null && !units[i][j].hasMoved() && !fought[i][j]) {
                     units[i][j].updateStam(true);
                     autoMove(units[i][j]);
                 }
@@ -233,22 +295,6 @@ public class Map {
             for (int j = 0; j < units[0].length; j++) {
                 if (units[i][j] != null) {
                     units[i][j].updateStam(false);
-                }
-            }
-        }
-        boolean[][] fought = new boolean[units.length][units[0].length];
-        Unit u, other;
-        for (int i = 0; i < units.length; i++) {
-            for (int j = 0; j < units[0].length; j++) {
-                if (!fought[i][j]) {
-                    u = units[i][j];
-                    if (u != null) {
-                        other = getUnitInRange(u);
-                        if (other != null) {
-                            combat(u, other);
-                            fought[other.getXPos()][other.getYPos()] = true;
-                        }
-                    }
                 }
             }
         }
