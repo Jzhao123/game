@@ -11,7 +11,7 @@ public class GameWindow extends JFrame{
     private final int height = 400;
     private Map map;
     private boolean running;
-    private final int fps = 2;
+    private final int fps = 15;
     
     private BufferedImage buffer;
     private Insets insets;
@@ -22,9 +22,6 @@ public class GameWindow extends JFrame{
      */
     public static void main(String[] args) {
         GameWindow window = new GameWindow();
-        System.out.println("\n\n\n");
-        window.init();
-        System.out.println("initialized");
         window.run();
         //System.exit(0);
     }
@@ -33,7 +30,7 @@ public class GameWindow extends JFrame{
      * Constructs a new game window.
      */
     public GameWindow() {
-        map = new Map(width/6, height/6, this);
+        //Do nothing
     }
     
     /**
@@ -42,6 +39,20 @@ public class GameWindow extends JFrame{
     public void won() {
         running = false;
         draw();
+    }
+    
+    /**
+     * Gets the left margin.
+     */
+    public int getLeft() {
+        return insets.left;
+    }
+    
+    /**
+     * Gets the right margin.
+     */
+    public int getTop() {
+        return insets.top;
     }
    
     /**
@@ -70,15 +81,14 @@ public class GameWindow extends JFrame{
      */
     public void init() {
         setTitle("APCS RTS Project");
-        insets = getInsets();
-        setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+        insets = getInsets();
+        System.out.println("\n" + insets.top);
+        setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
         buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        System.out.println("initialized window");
         map = Map.generateMap(width, height, this);
-        System.out.println("initialized map");
         running = true;
         input = new Input(this, map);
     }

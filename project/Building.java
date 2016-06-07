@@ -13,13 +13,11 @@ public class Building {
      * Constructor for objects of class Building
      */
     public Building(int xPos, int yPos, int xLen, int yLen, Color c) {
-        System.out.println("creating a building");
         x = xPos;
         y = yPos;
         xlen = xLen;
         ylen = yLen;
         color = c;
-        System.out.println("created a building");
     }
     
     /**

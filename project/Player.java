@@ -17,13 +17,6 @@ public class Player {
     }
     
     /**
-     * Tells a unit to be selected.
-     */
-    public void setSelected(Unit u) {
-        selected = u;
-    }
-    
-    /**
      * Adds a camp.
      */
     public void setCamp(Building acamp) {
@@ -35,13 +28,6 @@ public class Player {
      */
     public Building getCamp() {
         return camp;
-    }
-    
-    /**
-     * Returns the selected unit.
-     */
-    public Unit getSelected() {
-        return selected;
     }
     
     /**

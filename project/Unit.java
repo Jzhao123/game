@@ -5,14 +5,11 @@ import java.awt.Color;
  * 
  */
 public class Unit {
-    private int maxhp, hp;
-    private double atk, def;
-    private double exp;
-    private int xPos, yPos;
-    private boolean moved;
+    private int maxhp, hp, xPos, yPos, tX, tY;
+    private double atk;
+    private boolean moved, selected;
     private Color color;
     private Player player;
-    private int tX, tY;
     private Map map;
 
     /**
@@ -20,9 +17,7 @@ public class Unit {
      */
     public Unit(int health, double attack, int stamina, Color c) {
         hp = maxhp = health;
-        atk = attack;//Stock Attack is 50, increases as exp goes up
-        def = 0;//Precondition: Defense must be between 0 and 1
-        exp = 0;
+        atk = attack;
         color = c;
     }
     
@@ -66,13 +61,6 @@ public class Unit {
      */
     public double getAttack() {
         return atk;
-    }
-    
-    /**
-     * Returns the defense stat of the unit
-     */
-    public double getDefense() {
-        return def;
     }
     
     /**
@@ -147,4 +135,17 @@ public class Unit {
         moved = x;
     }
     
+    /**
+     * Selects/deselects this unit.
+     */
+    public void select(boolean x) {
+        selected = x;
+    }
+    
+    /**
+     * Gets the selction status of this unit.
+     */
+    public boolean isSelected() {
+        return selected;
+    }
 }

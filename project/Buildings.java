@@ -9,7 +9,6 @@ public class Buildings {
      * Creates a standard fortified camp.
      */
     public static Building getCamp(int xloc, int yloc, int length, int width) {
-        System.out.println("got to the camp thing here");
         return new Building(xloc, yloc, length, width, Color.orange);
     }
     
