@@ -3,8 +3,7 @@
  * Represents the player(s) in the game.
  */
 public class Player {
-    private int bar, morale;
-    private Unit selected;
+    private int bar;
     private Building camp;
 
     /**
@@ -12,8 +11,6 @@ public class Player {
      */
     public Player() {
         bar = 0;
-        morale = 100;
-        selected = null;
     }
     
     /**

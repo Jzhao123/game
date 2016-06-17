@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.params=
-comment0.target=Unit\ getLegionnaire()
-comment0.text=\n\ Returns\ a\ default\ leigonnaire.\ \n
-comment1.params=
-comment1.target=Unit\ getBarbarian()
-comment1.text=\n\ Returns\ a\ default\ barbarian.\ \n
-numComments=2

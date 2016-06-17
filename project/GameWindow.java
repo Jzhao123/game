@@ -1,13 +1,13 @@
 import java.awt.*;
 import javax.swing.JFrame;
 import java.awt.image.*;
-import java.awt.event.*;
 
 /**
  * Creates the game window.
  */
 public class GameWindow extends JFrame{
-    private final int width = 600;
+	private static final long serialVersionUID = 1L;
+	private final int width = 600;
     private final int height = 400;
     private Map map;
     private boolean running;
@@ -90,7 +90,7 @@ public class GameWindow extends JFrame{
         buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         map = Map.generateMap(width, height, this);
         running = true;
-        input = new Input(this, map);
+        setInput(new Input(this, map));
     }
     
     /**
@@ -109,4 +109,12 @@ public class GameWindow extends JFrame{
         map.drawImage(bbg, buffer);
         g.drawImage(buffer, insets.left, insets.top, this);
     }
+
+	public Input getInput() {
+		return input;
+	}
+
+	public void setInput(Input input) {
+		this.input = input;
+	}
 }

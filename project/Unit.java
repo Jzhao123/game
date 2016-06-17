@@ -10,7 +10,6 @@ public class Unit {
     private boolean moved, selected;
     private Color color;
     private Player player;
-    private Map map;
 
     /**
      * Constructor for objects of class Unit
@@ -22,10 +21,10 @@ public class Unit {
     }
     
     /**
-     * Adds a map to the unit.
+     * Resets the hp to max.
      */
-    public void setMap(Map gameMap) {
-        map = gameMap;
+    public void resetHP() {
+    	hp = maxhp;
     }
     
     /**

@@ -23,7 +23,7 @@ public class Input implements MouseListener {
         int h = e.getY();
         w = (w - map.getLeft())/Map.scale;
         h = (h - map.getTop())/Map.scale;
-        if (e.getButton() == e.BUTTON1) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
             Unit u = map.getUnit(w, h);
             if (u != null) {
                 if (u.getPlayer() == map.getHumanPlayer()) {
@@ -35,7 +35,7 @@ public class Input implements MouseListener {
                     map.setSelected(null);
                 }
             }
-        } else if (e.getButton() == e.BUTTON3) {
+        } else if (e.getButton() == MouseEvent.BUTTON3) {
             System.out.println("right click registered");
             Unit u2 = map.getSelected();
             if (u2 != null) {
